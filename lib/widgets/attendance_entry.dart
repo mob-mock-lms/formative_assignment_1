@@ -12,9 +12,8 @@ class AttendanceEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 28,
+    return Container(
+        height: 50,
         padding: const EdgeInsets.symmetric(horizontal: 14),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -41,7 +40,6 @@ class AttendanceEntry extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

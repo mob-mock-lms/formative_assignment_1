@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:assignments/widgets/attendance_entry.dart';
 import 'package:flutter/material.dart';
 import '../widgets/attendance_card.dart';
@@ -62,13 +64,19 @@ class AttendanceScreen extends StatelessWidget {
           const SizedBox(height: 20),
 
           Expanded(
-            child: Column(
-              spacing: 10,
-              children: const [
-                AttendanceEntry(date: "2024-06-01", attended: true),
-                AttendanceEntry(date: "2024-06-02", attended: false),
-                AttendanceEntry(date: "2024-06-03", attended: true),
-              ],
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: SingleChildScrollView(
+                child: Column(
+                  spacing: 10,
+                  children: [
+                    for (var i = 1; i <= 30; i++)
+                      AttendanceEntry(date: "2024-06-$i", attended: Random().nextBool()),
+                    AttendanceEntry(date: "2024-06-02", attended: false),
+                    AttendanceEntry(date: "2024-06-03", attended: true),
+                  ],
+                ),
+              ),
             ),
           ),
 
