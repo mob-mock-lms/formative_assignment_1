@@ -33,8 +33,8 @@ class AppBottomNavigation extends StatelessWidget {
           label: "E-learning",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          label: "User",
+          icon: Icon(Icons.checklist),
+          label: "Attendance",
         ),
       ],
     );

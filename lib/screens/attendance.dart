@@ -1,10 +1,103 @@
+import 'package:assignments/widgets/attendance_entry.dart';
 import 'package:flutter/material.dart';
+import '../widgets/attendance_card.dart';
 
 class AttendanceScreen extends StatelessWidget {
   const AttendanceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Hello Alex, At Risk",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+
+          const SizedBox(height: 20),
+
+          // Risk cards row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 10,
+            children: [
+              AttendanceCard(
+                percent: "75%",
+                label: "Attendance",
+                color: Colors.red,
+              ),
+              AttendanceCard(
+                percent: "60%",
+                label: "Assignment Submission",
+                color: Colors.orange,
+              ),
+              AttendanceCard(
+                percent: "63%",
+                label: "Average Exits",
+                color: Colors.redAccent,
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 30),
+
+          // Attendance history entries
+          const Text(
+            "Attendance History",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          Expanded(
+            child: Column(
+              spacing: 10,
+              children: const [
+                AttendanceEntry(date: "2024-06-01", attended: true),
+                AttendanceEntry(date: "2024-06-02", attended: false),
+                AttendanceEntry(date: "2024-06-03", attended: true),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 30),
+
+          // Help Card
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                backgroundColor: Colors.amber,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                "Get Help",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
