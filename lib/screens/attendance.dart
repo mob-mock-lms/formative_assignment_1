@@ -70,11 +70,21 @@ class AttendanceScreen extends StatelessWidget {
                 child: Column(
                   spacing: 10,
                   children: [
-                    for (var i = 1; i <= 31; i++)
-                      AttendanceEntry(
-                        date: "2024-06-${i < 10 ? '0$i' : i}",
-                        attended: Random().nextBool(),
-                      ),
+                    // No attendance entries case
+                    if (false)
+                      const Center(
+                        child: Text(
+                          "No attendance records found.",
+                          style: TextStyle(color: Colors.white54, fontSize: 16),
+                        ),
+                      )
+                    else
+                      // Display all attendance entries
+                      for (var i = 1; i <= 31; i++)
+                        AttendanceEntry(
+                          date: "2024-06-${i < 10 ? '0$i' : i}",
+                          attended: Random().nextBool(),
+                        ),
                   ],
                 ),
               ),
