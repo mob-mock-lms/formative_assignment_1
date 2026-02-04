@@ -70,10 +70,11 @@ class AttendanceScreen extends StatelessWidget {
                 child: Column(
                   spacing: 10,
                   children: [
-                    for (var i = 1; i <= 30; i++)
-                      AttendanceEntry(date: "2024-06-$i", attended: Random().nextBool()),
-                    AttendanceEntry(date: "2024-06-02", attended: false),
-                    AttendanceEntry(date: "2024-06-03", attended: true),
+                    for (var i = 1; i <= 31; i++)
+                      AttendanceEntry(
+                        date: "2024-06-${i < 10 ? '0$i' : i}",
+                        attended: Random().nextBool(),
+                      ),
                   ],
                 ),
               ),
