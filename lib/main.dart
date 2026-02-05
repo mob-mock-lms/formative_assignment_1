@@ -2,8 +2,10 @@ import 'package:assignments/screens/attendance.dart';
 import 'package:assignments/screens/elearning.dart';
 import 'package:assignments/screens/quizzes.dart';
 import 'package:assignments/screens/profile.dart';
+import 'package:assignments/screens/signup.dart';
 import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:assignments/widgets/app_bottom_navigation.dart';
+import 'package:assignments/models/user_profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,14 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _selectedTabIndex = 0;
-
-  // List of screens to display for each tab
-  final List<Widget> _screens = [
-    const AttendanceScreen(),
-    const QuizzesScreen(),
-    const ElearningScreen(),
-    const ProfileScreen(),
-  ];
+  UserProfile? _userProfile;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,19 +29,52 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _handleSignup(UserProfile profile) {
+    setState(() {
+      _userProfile = profile;
+    });
+  }
+
+  void _handleSignOut() {
+    setState(() {
+      _userProfile = null;
+      _selectedTabIndex = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_userProfile == null) {
+      return MaterialApp(
+        title: 'Formative Assessment 1',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF071A3A)),
+        ),
+        home: SignUpScreen(onSubmit: _handleSignup),
+      );
+    }
+
+    final screens = [
+      const AttendanceScreen(),
+      const QuizzesScreen(),
+      const ElearningScreen(),
+      ProfileScreen(profile: _userProfile!, onSignOut: _handleSignOut),
+    ];
+
     return MaterialApp(
       title: 'Formative Assessment 1',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Color(0xFF071A3A))),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF071A3A)),
+      ),
       home: Scaffold(
         backgroundColor: const Color(0xFF071A3A),
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(55),
+          preferredSize: const Size.fromHeight(55),
           child: AppAppBar(),
         ),
-        body: _screens[_selectedTabIndex],
+        body: screens[_selectedTabIndex],
         bottomNavigationBar: AppBottomNavigation(
           currentIndex: _selectedTabIndex,
           onTap: _onItemTapped,
