@@ -32,7 +32,7 @@ class AttendanceEntry extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Expanded(child: const SizedBox(width: 6)),
+            const Spacer(),
             Icon(
               Icons.check_circle,
               color: attended ? Colors.green : Colors.red,

@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Formative Assessment 1',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Color(0xFF071A3A))),
+      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF071A3A))),
       home: MainScreen(),
     );
   }
