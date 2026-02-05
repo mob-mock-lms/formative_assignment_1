@@ -1,5 +1,5 @@
-import 'package:assignments/screens/assignments_screen.dart';
 import 'package:flutter/material.dart';
+import 'assignments_screen.dart';
 
 class QuizzesScreen extends StatelessWidget {
   const QuizzesScreen({super.key});
