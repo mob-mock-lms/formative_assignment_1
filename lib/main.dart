@@ -1,4 +1,5 @@
 import 'package:assignments/screens/attendance.dart';
+import 'package:assignments/screens/dashboard.dart';
 import 'package:assignments/screens/elearning.dart';
 import 'package:assignments/screens/quizzes.dart';
 import 'package:assignments/screens/profile.dart';
@@ -21,7 +22,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _selectedTabIndex = 0;
+<<<<<<< irene-dashboard
+
+  // List of screens to display for each tab
+  final List<Widget> _screens = [
+    DashboardScreen(),
+    const AttendanceScreen(),
+    const QuizzesScreen(),
+    const ElearningScreen(),
+    const ProfileScreen(),
+  ];
+=======
   UserProfile? _userProfile;
+>>>>>>> main
 
   void _onItemTapped(int index) {
     setState(() {
