@@ -1,10 +1,13 @@
 import 'package:assignments/screens/dashboard.dart';
+import 'package:assignments/screens/profile.dart';
+import 'package:assignments/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/screens/attendance.dart';
 import 'package:assignments/screens/elearning.dart';
 import 'package:assignments/screens/quizzes.dart';
-import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:assignments/widgets/app_bottom_navigation.dart';
+
+import '../models/user_profile.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,12 +18,27 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedTabIndex = 0;
+  UserProfile? _userProfile;
 
-  final List<Widget> _screens = const [
+  void _handleSignup(UserProfile profile) {
+    setState(() {
+      _userProfile = profile;
+    });
+  }
+
+  void _handleSignOut() {
+    setState(() {
+      _userProfile = null;
+      _selectedTabIndex = 0;
+    });
+  }
+
+  late final List<Widget> _screens = [
     DashboardScreen(),
     QuizzesScreen(),
     ElearningScreen(),
     AttendanceScreen(),
+    ProfileScreen(profile: _userProfile!, onSignOut: _handleSignOut),
   ];
 
   void _onTabItemTapped(int index) {
@@ -31,12 +49,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_userProfile == null) {
+      return SignUpScreen(onSubmit: _handleSignup);
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFF071A3A),
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(55),
-        child: AppAppBar(),
-      ),
       // IndexedStack preserves the state of pages like scroll if you switch between them
       body: IndexedStack(
         index: _selectedTabIndex,

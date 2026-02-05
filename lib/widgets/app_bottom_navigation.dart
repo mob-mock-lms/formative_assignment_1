@@ -36,6 +36,10 @@ class AppBottomNavigation extends StatelessWidget {
           icon: Icon(Icons.checklist),
           label: "Attendance",
         ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          label: "User",
+        ),
       ],
     );
   }
