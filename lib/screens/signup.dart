@@ -61,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(55),
-        child: AppAppBar(title: 'Student Sign-Up'),
+        child: AppAppBar(title: "Student Sign-Up"),
       ),
       backgroundColor: const Color(0xFF071A3A),
       body: SafeArea(

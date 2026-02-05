@@ -9,7 +9,7 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(55),
-        child: AppAppBar(title: "Your Risk Status"),
+        child: AppAppBar(title: "Dashboard"),
       ),
       body: Placeholder(),
     );

@@ -17,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(55),
-        child: AppAppBar(title: "Your Risk Status"),
+        child: AppAppBar(title: "Profile"),
       ),
       body: SingleChildScrollView(
         child: Padding(
