@@ -217,7 +217,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               const SizedBox(height: 24),
 
-              /* ---------------- QUICK STATS ---------------- */
+              // quick stats section
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
