@@ -14,4 +14,29 @@ class Assignment {
     this.priority = 'Medium',
     this.isCompleted = false,
   });
+
+  // this is a helper method to get priority color
+  String getPriorityColor() {
+    switch (priority) {
+      case 'High':
+        return 'red';
+      case 'Medium':
+        return 'orange';
+      case 'Low':
+        return 'green';
+      default:
+        return 'orange';
+    }
+  }
+
+  // this is a helper method to check if assignment is overdue
+
+  bool isOverdue() {
+    return !isCompleted && DateTime.now().isAfter(dueDate);
+  }
+
+  // this is a helper method to get days until due
+  int daysUntilDue() {
+    return dueDate.difference(DateTime.now()).inDays;
+  }
 }
