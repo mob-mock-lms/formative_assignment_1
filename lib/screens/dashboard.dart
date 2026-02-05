@@ -46,8 +46,8 @@ class AcademicSession {
 
   bool isToday() {
     final now = DateTime.now();
-    return date.year == now.year && 
-           date.month == now.month && 
+    return date.year == now.year &&
+           date.month == now.month &&
            date.day == now.day;
   }
 }
@@ -176,7 +176,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   double get attendancePercentage {
     final sessionsWithAttendance = _sessions.where((s) => s.attended != null).toList();
     if (sessionsWithAttendance.isEmpty) return 100.0;
-    
+
     final presentCount = sessionsWithAttendance.where((s) => s.attended == true).length;
     return (presentCount / sessionsWithAttendance.length) * 100;
   }
@@ -200,7 +200,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final now = DateTime.now();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF071A3A),
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text(
           'Dashboard',
@@ -230,11 +230,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /* ---------------- GREETING SECTION ---------------- */
-              
+
               Text(
                 'Hello Alex 👋',
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withValues(alpha: 0.9),
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -243,7 +243,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Text(
                 '$today • Week $weekOfYear',
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withValues(alpha: 0.6),
                   fontSize: 14,
                 ),
               ),
@@ -251,7 +251,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 24),
 
               /* ---------------- AT RISK WARNING ---------------- */
-              
+
               if (isAtRisk)
                 Container(
                   width: double.infinity,
@@ -283,7 +283,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Text(
                               'Your attendance is below 75%',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.9),
+                                color: Colors.white.withValues(alpha: 0.9),
                                 fontSize: 13,
                               ),
                             ),
@@ -297,7 +297,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               if (isAtRisk) const SizedBox(height: 20),
 
               /* ---------------- METRICS ROW ---------------- */
-              
+
               Row(
                 children: [
                   Expanded(
@@ -305,8 +305,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       'Attendance',
                       '${attendancePercent.toStringAsFixed(1)}%',
                       Icons.calendar_today,
-                      attendancePercent >= 75 
-                          ? const Color(0xFF66BB6A) 
+                      attendancePercent >= 75
+                          ? const Color(0xFF66BB6A)
                           : const Color(0xFFE57373),
                     ),
                   ),
@@ -316,8 +316,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       'Assignments',
                       '${assignmentAttainmentPercent.toStringAsFixed(0)}%',
                       Icons.assignment,
-                      assignmentAttainmentPercent >= 75 
-                          ? const Color(0xFF66BB6A) 
+                      assignmentAttainmentPercent >= 75
+                          ? const Color(0xFF66BB6A)
                           : const Color(0xFFFFB74D),
                     ),
                   ),
@@ -327,8 +327,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       'Avg Grade',
                       '${averageGrade.toStringAsFixed(0)}%',
                       Icons.grade,
-                      averageGrade >= 75 
-                          ? const Color(0xFF66BB6A) 
+                      averageGrade >= 75
+                          ? const Color(0xFF66BB6A)
                           : const Color(0xFFE57373),
                     ),
                   ),
@@ -338,16 +338,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 24),
 
               /* ---------------- TODAY'S SCHEDULE ---------------- */
-              
+
               _buildSectionHeader('Today\'s Schedule', todaysSessions.length),
               const SizedBox(height: 12),
-              
+
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
                 child: todaysSessions.isEmpty
@@ -357,7 +357,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: Text(
                             'No sessions scheduled for today',
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
+                              color: Colors.white.withValues(alpha: 0.5),
                               fontSize: 14,
                             ),
                           ),
@@ -368,13 +368,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: todaysSessions.length,
                         separatorBuilder: (context, index) => Divider(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           height: 1,
                         ),
                         itemBuilder: (context, index) {
                           final session = todaysSessions[index];
                           final startTime = session.startTime.format(context);
-                          
+
                           return ListTile(
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16,
@@ -384,7 +384,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               width: 50,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: const Color(0xFF64B5F6).withOpacity(0.2),
+                                color: const Color(0xFF64B5F6).withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: const Icon(
@@ -403,17 +403,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             subtitle: Text(
                               '$startTime${session.location.isNotEmpty ? ' • ${session.location}' : ''}',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.6),
+                                color: Colors.white.withValues(alpha: 0.6),
                                 fontSize: 13,
                               ),
                             ),
                             trailing: session.attended != null
                                 ? Icon(
-                                    session.attended! 
-                                        ? Icons.check_circle 
+                                    session.attended!
+                                        ? Icons.check_circle
                                         : Icons.cancel,
-                                    color: session.attended! 
-                                        ? const Color(0xFF66BB6A) 
+                                    color: session.attended!
+                                        ? const Color(0xFF66BB6A)
                                         : const Color(0xFFE57373),
                                   )
                                 : null,
@@ -425,7 +425,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 24),
 
               /* ---------------- UPCOMING ASSIGNMENTS ---------------- */
-              
+
               _buildSectionHeader(
                 'Assignments Due Soon',
                 upcomingAssignments.length,
@@ -434,10 +434,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
                 child: upcomingAssignments.isEmpty
@@ -448,14 +448,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               Icon(
                                 Icons.check_circle_outline,
-                                color: Colors.white.withOpacity(0.3),
+                                color: Colors.white.withValues(alpha: 0.3),
                                 size: 48,
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 'All caught up! 🎉',
                                 style: TextStyle(
-                                  color: Colors.white.withOpacity(0.5),
+                                  color: Colors.white.withValues(alpha: 0.5),
                                   fontSize: 14,
                                 ),
                               ),
@@ -468,7 +468,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: upcomingAssignments.length,
                         separatorBuilder: (context, index) => Divider(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           height: 1,
                         ),
                         itemBuilder: (context, index) {
@@ -485,14 +485,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               width: 50,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: isUrgent 
-                                    ? const Color(0xFFE57373).withOpacity(0.2)
-                                    : const Color(0xFFFFB74D).withOpacity(0.2),
+                                color: isUrgent
+                                    ? const Color(0xFFE57373).withValues(alpha: 0.2)
+                                    : const Color(0xFFFFB74D).withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Icon(
                                 Icons.assignment,
-                                color: isUrgent 
+                                color: isUrgent
                                     ? const Color(0xFFE57373)
                                     : const Color(0xFFFFB74D),
                               ),
@@ -508,7 +508,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             subtitle: Text(
                               '${assignment.course} • Due ${DateFormat('MMM d').format(assignment.dueDate)}',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.6),
+                                color: Colors.white.withValues(alpha: 0.6),
                                 fontSize: 13,
                               ),
                             ),
@@ -518,21 +518,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
-                                color: isUrgent 
+                                color: isUrgent
                                     ? const Color(0xFFE57373)
-                                    : Colors.white.withOpacity(0.1),
+                                    : Colors.white.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                daysLeft == 0 
-                                    ? 'Today' 
-                                    : daysLeft == 1 
-                                        ? 'Tomorrow' 
+                                daysLeft == 0
+                                    ? 'Today'
+                                    : daysLeft == 1
+                                        ? 'Tomorrow'
                                         : '$daysLeft days',
                                 style: TextStyle(
-                                  color: isUrgent 
+                                  color: isUrgent
                                       ? Colors.white
-                                      : Colors.white.withOpacity(0.8),
+                                      : Colors.white.withValues(alpha: 0.8),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -546,14 +546,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 24),
 
               /* ---------------- QUICK STATS ---------------- */
-              
+
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
                 child: Row(
@@ -581,7 +581,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 24),
 
               /* ---------------- GET HELP BUTTON ---------------- */
-              
+
               if (isAtRisk)
                 SizedBox(
                   width: double.infinity,
@@ -630,10 +630,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -654,7 +654,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             label,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               fontSize: 12,
               fontWeight: FontWeight.w500,
             ),
@@ -680,7 +680,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -701,7 +701,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: [
         Icon(
           icon,
-          color: Colors.white.withOpacity(0.6),
+          color: Colors.white.withValues(alpha: 0.6),
           size: 28,
         ),
         const SizedBox(height: 8),
@@ -716,7 +716,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Text(
           label,
           style: TextStyle(
-            color: Colors.white.withOpacity(0.6),
+            color: Colors.white.withValues(alpha: 0.6),
             fontSize: 12,
           ),
         ),

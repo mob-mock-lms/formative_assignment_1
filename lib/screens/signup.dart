@@ -1,3 +1,4 @@
+import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/models/user_profile.dart';
 
@@ -58,19 +59,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: const Text(
-          'Student Sign-Up',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
       backgroundColor: const Color(0xFF071A3A),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(55),
+        child: AppAppBar(title: "Student Sign-Up"),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -90,10 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 8),
                 const Text(
                   'Create your account',
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(color: Colors.white70, fontSize: 16),
                 ),
                 const SizedBox(height: 40),
                 TextFormField(
@@ -110,7 +100,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFFFFC107), width: 2),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFFFC107),
+                        width: 2,
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     errorBorder: OutlineInputBorder(
@@ -147,7 +140,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFFFFC107), width: 2),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFFFC107),
+                        width: 2,
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     errorBorder: OutlineInputBorder(
@@ -179,19 +175,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                ..._courses.keys.map((course) => CheckboxListTile(
-                      title: Text(
-                        course,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      value: _courses[course],
-                      activeColor: const Color(0xFFFFC107),
-                      checkColor: const Color(0xFF071A3A),
-                      side: const BorderSide(color: Colors.white30),
-                      onChanged: (v) {
-                        setState(() => _courses[course] = v ?? false);
-                      },
-                    )),
+                ..._courses.keys.map(
+                  (course) => CheckboxListTile(
+                    title: Text(
+                      course,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    value: _courses[course],
+                    activeColor: const Color(0xFFFFC107),
+                    checkColor: const Color(0xFF071A3A),
+                    side: const BorderSide(color: Colors.white30),
+                    onChanged: (v) {
+                      setState(() => _courses[course] = v ?? false);
+                    },
+                  ),
+                ),
                 const SizedBox(height: 40),
                 SizedBox(
                   height: 50,
