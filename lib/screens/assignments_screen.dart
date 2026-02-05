@@ -98,12 +98,18 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF071A3A),
       appBar: AppBar(
         title: const Text(
           'Assignments',
           style: TextStyle(
-              color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        backgroundColor: const Color(0xFF071A3A),
+        elevation: 0,
         centerTitle: false,
       ),
       body: assignments.isEmpty
@@ -111,8 +117,11 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.assignment_outlined,
-                      size: 80, color: Colors.grey[600]),
+                  Icon(
+                    Icons.assignment_outlined,
+                    size: 80,
+                    color: Colors.grey[600],
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     'No assignments yet',
@@ -187,8 +196,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            decoration:
-                assignment.isCompleted ? TextDecoration.lineThrough : null,
+            decoration: assignment.isCompleted
+                ? TextDecoration.lineThrough
+                : null,
           ),
         ),
         subtitle: Column(
@@ -207,8 +217,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                 Text(
                   dateFormat.format(assignment.dueDate),
                   style: TextStyle(
-                    color:
-                        isOverdue ? const Color(0xFFFF3B30) : Colors.grey[400],
+                    color: isOverdue
+                        ? const Color(0xFFFF3B30)
+                        : Colors.grey[400],
                     fontSize: 13,
                   ),
                 ),
@@ -216,16 +227,19 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                 if (!assignment.isCompleted && !isOverdue)
                   Text(
                     '($daysUntil ${daysUntil == 1 ? 'day' : 'days'} left)',
-                    style:
-                        const TextStyle(color: Color(0xFFFFC107), fontSize: 12),
+                    style: const TextStyle(
+                      color: Color(0xFFFFC107),
+                      fontSize: 12,
+                    ),
                   ),
                 if (isOverdue)
                   const Text(
                     '(Overdue)',
                     style: TextStyle(
-                        color: Color(0xFFFF3B30),
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
+                      color: Color(0xFFFF3B30),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
               ],
             ),
@@ -289,8 +303,10 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1A2F4F),
-        title: const Text('Delete Assignment',
-            style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Delete Assignment',
+          style: TextStyle(color: Colors.white),
+        ),
         content: Text(
           'Are you sure you want to delete "${assignment.title}"?',
           style: const TextStyle(color: Colors.grey),
@@ -305,8 +321,10 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
               _deleteAssignment(assignment.id);
               Navigator.pop(context);
             },
-            child: const Text('Delete',
-                style: TextStyle(color: Color(0xFFFF3B30))),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: Color(0xFFFF3B30)),
+            ),
           ),
         ],
       ),

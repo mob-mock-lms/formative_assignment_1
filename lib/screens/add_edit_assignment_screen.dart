@@ -101,12 +101,18 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
     final bool isEditing = widget.assignment != null;
 
     return Scaffold(
+      backgroundColor: const Color(0xFF071A3A),
       appBar: AppBar(
         title: Text(
           isEditing ? 'Edit Assignment' : 'New Assignment',
           style: const TextStyle(
-              color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        backgroundColor: const Color(0xFF071A3A),
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
@@ -141,8 +147,10 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
                   ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -154,7 +162,6 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
               const SizedBox(height: 20),
 
               // Course name field
-
               const Text(
                 'Course Name *',
                 style: TextStyle(
@@ -176,8 +183,10 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
                   ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
@@ -189,7 +198,6 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
               const SizedBox(height: 20),
 
               // Due Date Picker
-
               const Text(
                 'Due Date *',
                 style: TextStyle(
@@ -202,16 +210,21 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
               InkWell(
                 onTap: _selectDate,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFF1A2F4F),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.calendar_today,
-                          color: Color(0xFFFFC107), size: 20),
+                      const Icon(
+                        Icons.calendar_today,
+                        color: Color(0xFFFFC107),
+                        size: 20,
+                      ),
                       const SizedBox(width: 12),
                       Text(
                         _selectedDate == null
@@ -231,7 +244,6 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
               const SizedBox(height: 20),
 
               // Priority Dropdown
-
               const Text(
                 'Priority Level',
                 style: TextStyle(
@@ -253,8 +265,10 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                     isExpanded: true,
                     dropdownColor: const Color(0xFF1A2F4F),
                     style: const TextStyle(color: Colors.white, fontSize: 16),
-                    icon:
-                        const Icon(Icons.arrow_drop_down, color: Colors.white),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                    ),
                     items: _priorities.map((String priority) {
                       Color priorityColor;
                       switch (priority) {
@@ -302,7 +316,6 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
               const SizedBox(height: 40),
 
               // Save Button
-
               ElevatedButton(
                 onPressed: _saveAssignment,
                 style: ElevatedButton.styleFrom(
