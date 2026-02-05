@@ -1,4 +1,5 @@
 import 'package:assignments/screens/attendance.dart';
+import 'package:assignments/screens/dashboard.dart';
 import 'package:assignments/screens/elearning.dart';
 import 'package:assignments/screens/quizzes.dart';
 import 'package:assignments/screens/profile.dart';
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
 
   // List of screens to display for each tab
   final List<Widget> _screens = [
+    DashboardScreen(),
     const AttendanceScreen(),
     const QuizzesScreen(),
     const ElearningScreen(),
@@ -39,7 +41,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Formative Assessment 1',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Color(0xFF071A3A))),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF071A3A)),
+      ),
       home: Scaffold(
         backgroundColor: const Color(0xFF071A3A),
         appBar: PreferredSize(
