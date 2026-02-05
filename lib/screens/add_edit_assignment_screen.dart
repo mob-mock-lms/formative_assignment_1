@@ -30,7 +30,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
 
     if (widget.assignment != null) {
       _titleController.text = widget.assignment!.title;
-      _courseController.text = widget.assignment!.courseName;
+      _courseController.text = widget.assignment!.course;
       _selectedDate = widget.assignment!.dueDate;
       _selectedPriority = widget.assignment!.priority;
     }
@@ -86,7 +86,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
       final assignment = Assignment(
         id: widget.assignment?.id ?? DateTime.now().toString(),
         title: _titleController.text.trim(),
-        courseName: _courseController.text.trim(),
+        course: _courseController.text.trim(),
         dueDate: _selectedDate!,
         priority: _selectedPriority,
         isCompleted: widget.assignment?.isCompleted ?? false,

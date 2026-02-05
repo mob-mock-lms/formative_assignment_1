@@ -18,14 +18,14 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
       id: '1',
       title: 'Remedial Project',
       dueDate: DateTime.now().add(const Duration(days: 3)),
-      courseName: 'Software Engineering',
+      course: 'Software Engineering',
       priority: 'High',
     ),
     Assignment(
       id: '2',
       title: 'Assignment 2',
       dueDate: DateTime.now().add(const Duration(days: 5)),
-      courseName: 'Data Structures',
+      course: 'Data Structures',
       priority: 'Medium',
     ),
   ];
@@ -206,7 +206,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
           children: [
             const SizedBox(height: 4),
             Text(
-              assignment.courseName,
+              assignment.course,
               style: const TextStyle(color: Colors.grey, fontSize: 14),
             ),
             const SizedBox(height: 4),

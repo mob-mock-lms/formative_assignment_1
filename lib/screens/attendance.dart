@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:assignments/widgets/attendance_entry.dart';
 import 'package:flutter/material.dart';
+
 import '../widgets/attendance_card.dart';
+import '../widgets/help_card.dart';
 
 class AttendanceScreen extends StatelessWidget {
   const AttendanceScreen({super.key});
@@ -105,44 +107,7 @@ class AttendanceScreen extends StatelessWidget {
             const SizedBox(height: 30),
 
             // Help Card
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  showDialog<void>(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Need Help?'),
-                      content: const Text(
-                        'Your attendance and assignment risk status is shown above. '
-                        'If you have questions, please contact your instructor or advisor.',
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.amber,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  "Get Help",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
+            HelpCard(),
           ],
         ),
       ),
