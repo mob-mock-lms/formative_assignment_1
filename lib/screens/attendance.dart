@@ -11,6 +11,7 @@ class AttendanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: AppAppBar(title: "Your Risk Status"),

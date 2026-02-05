@@ -59,11 +59,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF071A3A),
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: AppAppBar(title: "Student Sign-Up"),
       ),
-      backgroundColor: const Color(0xFF071A3A),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
