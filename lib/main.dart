@@ -1,4 +1,4 @@
-import 'package:assignments/screens/main.dart';
+import 'package:assignments/screens/root_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

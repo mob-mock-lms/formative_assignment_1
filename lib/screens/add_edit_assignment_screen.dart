@@ -16,9 +16,12 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _courseController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   DateTime? _selectedDate;
   String _selectedPriority = 'Medium';
+  bool _reminderEnabled = false;
+  TimeOfDay? _reminderTime;
 
   final List<String> _priorities = ['High', 'Medium', 'Low'];
 
@@ -31,8 +34,14 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
     if (widget.assignment != null) {
       _titleController.text = widget.assignment!.title;
       _courseController.text = widget.assignment!.course;
+      _descriptionController.text = widget.assignment!.description;
       _selectedDate = widget.assignment!.dueDate;
       _selectedPriority = widget.assignment!.priority;
+      if (widget.assignment!.reminderAt != null) {
+        final dt = widget.assignment!.reminderAt!;
+        _reminderEnabled = true;
+        _reminderTime = TimeOfDay(hour: dt.hour, minute: dt.minute);
+      }
     }
   }
 
@@ -40,6 +49,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
   void dispose() {
     _titleController.dispose();
     _courseController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -83,12 +93,27 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
         return;
       }
 
+      // Build reminder DateTime if enabled
+      DateTime? reminderAt;
+      if (_reminderEnabled && _reminderTime != null) {
+        final d = _selectedDate!;
+        reminderAt = DateTime(
+          d.year,
+          d.month,
+          d.day,
+          _reminderTime!.hour,
+          _reminderTime!.minute,
+        );
+      }
+
       final assignment = Assignment(
         id: widget.assignment?.id ?? DateTime.now().toString(),
         title: _titleController.text.trim(),
         course: _courseController.text.trim(),
         dueDate: _selectedDate!,
+        description: _descriptionController.text.trim(),
         priority: _selectedPriority,
+        reminderAt: reminderAt,
         isCompleted: widget.assignment?.isCompleted ?? false,
       );
 
@@ -194,6 +219,37 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                   }
                   return null;
                 },
+              ),
+              const SizedBox(height: 20),
+
+              // Description field
+              const Text(
+                'Description',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _descriptionController,
+                style: const TextStyle(color: Colors.white),
+                maxLines: 3,
+                decoration: InputDecoration(
+                  hintText: 'Add extra details or instructions (optional)',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
+                  filled: true,
+                  fillColor: const Color(0xFF1A2F4F),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
 
@@ -313,6 +369,101 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
+
+              // Reminder toggle and time
+              Row(
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Reminder',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Switch(
+                    value: _reminderEnabled,
+                    activeThumbColor: const Color(0xFFFFC107),
+                    onChanged: (v) async {
+                      setState(() => _reminderEnabled = v);
+                      if (v && _reminderTime == null) {
+                        final t = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: const ColorScheme.dark(
+                                  primary: Color(0xFFFFC107),
+                                  onPrimary: Color(0xFF071A3A),
+                                  surface: Color(0xFF1A2F4F),
+                                  onSurface: Colors.white,
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
+                        );
+                        if (t != null && mounted) {
+                          setState(() => _reminderTime = t);
+                        }
+                      }
+                    },
+                  ),
+                ],
+              ),
+              if (_reminderEnabled)
+                InkWell(
+                  onTap: () async {
+                    final t = await showTimePicker(
+                      context: context,
+                      initialTime: _reminderTime ?? TimeOfDay.now(),
+                      builder: (context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            colorScheme: const ColorScheme.dark(
+                              primary: Color(0xFFFFC107),
+                              onPrimary: Color(0xFF071A3A),
+                              surface: Color(0xFF1A2F4F),
+                              onSurface: Colors.white,
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
+                    );
+                    if (t != null && mounted) setState(() => _reminderTime = t);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1A2F4F),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.access_time,
+                          color: Color(0xFFFFC107),
+                          size: 20,
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          _reminderTime == null
+                              ? 'Pick reminder time'
+                              : _reminderTime!.format(context),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               const SizedBox(height: 40),
 
               // Save Button

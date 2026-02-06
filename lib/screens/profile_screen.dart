@@ -1,4 +1,5 @@
 import 'package:assignments/widgets/app_app_bar.dart';
+import 'package:assignments/widgets/help_card.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/models/user_profile.dart';
 
@@ -25,69 +26,6 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              // Profile Header with Avatar
-              Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color(0xFFFFC107).withValues(alpha: 0.3),
-                      const Color(0xFFFFC107).withValues(alpha: 0.1),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: const Color(0xFFFFC107).withValues(alpha: 0.3),
-                    width: 1,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFC107),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(
-                              0xFFFFC107,
-                            ).withValues(alpha: 0.3),
-                            blurRadius: 20,
-                            spreadRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.person,
-                        size: 50,
-                        color: Color(0xFF071A3A),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Student Profile',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${profile.courses.length} Course${profile.courses.length != 1 ? 's' : ''} Enrolled',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-
               // Email Section
               Container(
                 padding: const EdgeInsets.all(20),
@@ -240,6 +178,9 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
+
+              const HelpCard(),
+              const SizedBox(height: 20),
 
               // Sign Out Button
               SizedBox(

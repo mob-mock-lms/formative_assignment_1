@@ -5,7 +5,7 @@ import 'package:assignments/widgets/assignments_list.dart';
 import 'package:assignments/widgets/dashboard_empty_list.dart';
 import 'package:assignments/widgets/dashboard_section_header.dart';
 import 'package:assignments/widgets/help_card.dart';
-import 'package:assignments/widgets/metrics_card.dart';
+import 'package:assignments/widgets/profile_metrics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -74,13 +74,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final int weekOfYear = ((DateTime.now().dayOfYear + 6) ~/ 7);
 
     final attendancePercent = attendancePercentage;
-    final assignmentAttainmentPercent = assignmentAttainment;
-    final averageGrade = 63.0; // Placeholder - calculate from actual grades
 
     final bool isAtRisk = attendancePercent < 75;
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF071A3A),
       appBar: AppBar(
         title: const Text(
           'Dashboard',
@@ -129,38 +127,52 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               const SizedBox(height: 24),
 
+              // Attendance metrics + Get Help
+              ProfileMetrics(),
+              const SizedBox(height: 32),
+
+              // quick stats section (moved to top)
+              /*Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.1),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    DashboardQuickStatCard(
+                      label: 'Pending',
+                      value: pendingAssignmentsCount.toString(),
+                      icon: Icons.pending_actions,
+                    ),
+                    DashboardQuickStatCard(
+                      label: 'Completed',
+                      value: _assignments
+                          .where((a) => a.isCompleted)
+                          .length
+                          .toString(),
+                      icon: Icons.check_circle,
+                    ),
+                    DashboardQuickStatCard(
+                      label: 'Sessions',
+                      value: _sessions.length.toString(),
+                      icon: Icons.event,
+                    ),
+                  ],
+                ),
+              ),*/
+
+              const SizedBox(height: 24),
+
               // risk warning banner
               if (isAtRisk) RiskBanner(),
 
               if (isAtRisk) const SizedBox(height: 20),
 
-              // metrics cards row
-              Row(
-                children: [
-                  MetricsCard(
-                    label: 'Attendance',
-                    value: '${attendancePercent.toStringAsFixed(1)}%',
-                    icon: Icons.calendar_today,
-                    goodPerformance: attendancePercent >= 75,
-                  ),
-                  const SizedBox(width: 12),
-                  MetricsCard(
-                    label: 'Assignment',
-                    value: '${assignmentAttainmentPercent.toStringAsFixed(1)}%',
-                    icon: Icons.assignment,
-                    goodPerformance: assignmentAttainmentPercent >= 75,
-                  ),
-                  const SizedBox(width: 12),
-                  MetricsCard(
-                    label: 'Avg Grade',
-                    value: '${averageGrade.toStringAsFixed(0)}%',
-                    icon: Icons.grade,
-                    goodPerformance: averageGrade >= 75,
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
 
               // today's schedule section
               DashboardSectionHeader(
@@ -213,43 +225,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         count: upcomingAssignments.length,
                         assignments: upcomingAssignments,
                       ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // quick stats section
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.1),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    DashboardQuickStatCard(
-                      label: 'Pending',
-                      value: pendingAssignmentsCount.toString(),
-                      icon: Icons.pending_actions,
-                    ),
-                    DashboardQuickStatCard(
-                      label: 'Completed',
-                      value: _assignments
-                          .where((a) => a.isCompleted)
-                          .length
-                          .toString(),
-                      icon: Icons.check_circle,
-                    ),
-                    DashboardQuickStatCard(
-                      label: 'Sessions',
-                      value: _sessions.length.toString(),
-                      icon: Icons.event,
-                    ),
-                  ],
-                ),
               ),
 
               const SizedBox(height: 24),

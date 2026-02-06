@@ -247,7 +247,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: priorityColor.withOpacity(0.2),
+                color: priorityColor.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(color: priorityColor, width: 1),
               ),

@@ -1,13 +1,12 @@
-import 'package:assignments/screens/dashboard.dart';
-import 'package:assignments/screens/profile.dart';
-import 'package:assignments/screens/signup.dart';
+import 'package:assignments/screens/assignments_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:assignments/screens/attendance.dart';
-import 'package:assignments/screens/elearning.dart';
-import 'package:assignments/screens/quizzes.dart';
+import 'package:assignments/screens/signup_screen.dart';
 import 'package:assignments/widgets/app_bottom_navigation.dart';
+import 'package:assignments/screens/dashboard_screen.dart';
+import 'package:assignments/screens/profile_screen.dart';
 
 import '../models/user_profile.dart';
+import '../repositories/user_repository.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,25 +18,41 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedTabIndex = 0;
   UserProfile? _userProfile;
+  final _userRepo = UserRepository();
 
-  void _handleSignup(UserProfile profile) {
+  @override
+  void initState() {
+    super.initState();
+    _loadUser();
+  }
+
+  Future<void> _loadUser() async {
+    final user = await _userRepo.load();
+    if (mounted) {
+      setState(() {
+        _userProfile = user;
+      });
+    }
+  }
+
+  Future<void> _handleSignup(UserProfile profile) async {
+    await _userRepo.save(profile);
     setState(() {
       _userProfile = profile;
     });
   }
 
-  void _handleSignOut() {
+  Future<void> _handleSignOut() async {
+    await _userRepo.clear();
     setState(() {
       _userProfile = null;
       _selectedTabIndex = 0;
     });
   }
 
-  late final List<Widget> _screens = [
-    DashboardScreen(),
-    QuizzesScreen(),
-    ElearningScreen(),
-    AttendanceScreen(),
+  List<Widget> get _screens => [
+    const DashboardScreen(),
+    const AssignmentsScreen(),
     ProfileScreen(profile: _userProfile!, onSignOut: _handleSignOut),
   ];
 
@@ -56,10 +71,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF071A3A),
       // IndexedStack preserves the state of pages like scroll if you switch between them
-      body: IndexedStack(
-        index: _selectedTabIndex,
-        children: _screens,
-      ),
+      body: IndexedStack(index: _selectedTabIndex, children: _screens),
       bottomNavigationBar: AppBottomNavigation(
         currentIndex: _selectedTabIndex,
         onTap: _onTabItemTapped,
