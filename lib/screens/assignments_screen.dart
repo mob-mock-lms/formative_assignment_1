@@ -2,6 +2,7 @@ import 'package:assignments/utils/constants.dart';
 import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import '../models/assignment.dart';
+import '../theme/app_colors.dart';
 import 'add_edit_assignment_screen.dart';
 import 'package:intl/intl.dart';
 
@@ -137,15 +138,15 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
     Color priorityColor;
     switch (assignment.priority) {
       case 'High':
-        priorityColor = const Color(0xFFFF3B30);
+        priorityColor = AppColors.error;
         break;
       case 'Medium':
-        priorityColor = const Color(0xFFFFC107);
+        priorityColor = AppColors.accent;
         break;
       case 'Low':
-        priorityColor = const Color(0xFF4CAF50);
+        priorityColor = AppColors.success;
       default:
-        priorityColor = const Color(0xFFFFC107);
+        priorityColor = AppColors.accent;
     }
 
     return Container(

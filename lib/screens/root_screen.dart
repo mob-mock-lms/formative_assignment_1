@@ -1,4 +1,6 @@
 import 'package:assignments/screens/assignments_screen.dart';
+import 'package:assignments/theme/app_colors.dart';
+import 'package:assignments/theme/app_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/screens/signup_screen.dart';
 import 'package:assignments/widgets/app_bottom_navigation.dart';
@@ -6,7 +8,6 @@ import 'package:assignments/screens/dashboard_screen.dart';
 import 'package:assignments/screens/profile_screen.dart';
 
 import '../models/user_profile.dart';
-import '../repositories/user_repository.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,7 +19,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedTabIndex = 0;
   UserProfile? _userProfile;
-  final _userRepo = UserRepository();
+  final _userRepo = AppProviders.userRepository;
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFF071A3A),
+      backgroundColor: AppColors.primary,
       // IndexedStack preserves the state of pages like scroll if you switch between them
       body: IndexedStack(index: _selectedTabIndex, children: _screens),
       bottomNavigationBar: AppBottomNavigation(

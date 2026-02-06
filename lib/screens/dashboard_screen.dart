@@ -1,6 +1,7 @@
 import 'package:assignments/models/assignment.dart';
 import 'package:assignments/models/assignment_session.dart';
-import 'package:assignments/utils/constants.dart';
+import 'package:assignments/models/user_profile.dart';
+import 'package:assignments/theme/app_providers.dart';
 import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:assignments/widgets/assignments_list.dart';
 import 'package:assignments/widgets/dashboard_empty_list.dart';
@@ -22,12 +23,33 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // Sample data - your teammates can add their real data here
-  final List<Assignment> _assignments = assignments;
+  final _assignmentRepo = AppProviders.assignmentRepository;
+  final _sessionRepo = AppProviders.sessionRepository;
+  final _userRepo = AppProviders.userRepository;
 
-  final List<AcademicSession> _sessions = sessions;
+  List<Assignment> _assignments = [];
+  List<AcademicSession> _sessions = [];
+  UserProfile? _userProfile;
 
-  // Getters for computed values
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final assignments = await _assignmentRepo.getAll();
+    final sessions = await _sessionRepo.getAll();
+    final profile = await _userRepo.load();
+
+    setState(() {
+      _assignments = assignments;
+      _sessions = sessions;
+      _userProfile = profile;
+    });
+  }
+
+  // ...existing code...
   List<AcademicSession> get todaysSessions {
     return _sessions.where((session) => session.isToday()).toList()
       ..sort((a, b) {
@@ -91,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               // greeting and date section
               Text(
-                'Hello Alex,',
+                'Hello ${_userProfile?.email.split('@').first ?? 'User'},',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.9),
                   fontSize: 28,

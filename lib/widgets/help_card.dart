@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:assignments/theme/app_colors.dart';
 
 class HelpCard extends StatelessWidget {
   const HelpCard({super.key});
@@ -12,7 +13,7 @@ class HelpCard extends StatelessWidget {
         onPressed: () => _onHelpPressed(context),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
-          backgroundColor: Colors.amber,
+          backgroundColor: AppColors.accent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -20,7 +21,7 @@ class HelpCard extends StatelessWidget {
         child: const Text(
           "Get Help",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),

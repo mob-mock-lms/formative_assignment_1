@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:assignments/theme/app_colors.dart';
 
 class MetricsCard extends StatelessWidget {
   final String label;
@@ -17,8 +18,8 @@ class MetricsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color = goodPerformance
-        ? const Color(0xFF66BB6A)
-        : const Color(0xFFFFB74D);
+        ? AppColors.success
+        : AppColors.accent;
 
     return Expanded(
       child: Container(

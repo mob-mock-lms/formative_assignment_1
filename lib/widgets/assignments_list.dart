@@ -1,4 +1,5 @@
 import 'package:assignments/models/assignment.dart';
+import 'package:assignments/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -37,15 +38,13 @@ class AssignmentsList extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
               color: isUrgent
-                  ? const Color(0xFFE57373).withValues(alpha: 0.2)
-                  : const Color(0xFFFFB74D).withValues(alpha: 0.2),
+                  ? AppColors.errorLight(0.2)
+                  : AppColors.warningLight(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               Icons.assignment,
-              color: isUrgent
-                  ? const Color(0xFFE57373)
-                  : const Color(0xFFFFB74D),
+              color: isUrgent ? AppColors.error : AppColors.warning,
             ),
           ),
           title: Text(
@@ -67,7 +66,7 @@ class AssignmentsList extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: isUrgent
-                  ? const Color(0xFFE57373)
+                  ? AppColors.error
                   : Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
             ),

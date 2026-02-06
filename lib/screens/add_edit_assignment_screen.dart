@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:assignments/theme/app_colors.dart';
 import '../models/assignment.dart';
 import 'package:intl/intl.dart';
 
@@ -63,9 +64,9 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.dark(
-              primary: Color(0xFFFFC107),
-              onPrimary: Color(0xFF0A1E3C),
-              surface: Color(0xFF1A2F4F),
+              primary: AppColors.accent,
+              onPrimary: Colors.white,
+              surface: AppColors.primary,
               onSurface: Colors.white,
             ),
           ),
@@ -87,7 +88,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Please select a due date'),
-            backgroundColor: Color(0xFFFF3B30),
+            backgroundColor: AppColors.error,
           ),
         );
         return;
@@ -167,7 +168,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                   hintText: 'Enter assignment title',
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
-                  fillColor: const Color(0xFF1A2F4F),
+                  fillColor: AppColors.primary.withValues(alpha: 0.5),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -203,7 +204,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                   hintText: 'Enter course name',
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
-                  fillColor: const Color(0xFF1A2F4F),
+                  fillColor: AppColors.primary.withValues(alpha: 0.5),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -240,7 +241,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                   hintText: 'Add extra details or instructions (optional)',
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
-                  fillColor: const Color(0xFF1A2F4F),
+                  fillColor: AppColors.primary.withValues(alpha: 0.5),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -271,7 +272,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                     vertical: 14,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1A2F4F),
+                    color: AppColors.primary.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -312,14 +313,14 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1A2F4F),
+                  color: AppColors.primary.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: _selectedPriority,
                     isExpanded: true,
-                    dropdownColor: const Color(0xFF1A2F4F),
+                    dropdownColor: AppColors.primary.withValues(alpha: 0.8),
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                     icon: const Icon(
                       Icons.arrow_drop_down,
@@ -329,16 +330,16 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                       Color priorityColor;
                       switch (priority) {
                         case 'High':
-                          priorityColor = const Color(0xFFFF3B30);
+                          priorityColor = AppColors.error;
                           break;
                         case 'Medium':
-                          priorityColor = const Color(0xFFFFC107);
+                          priorityColor = AppColors.accent;
                           break;
                         case 'Low':
-                          priorityColor = const Color(0xFF4CAF50);
+                          priorityColor = AppColors.success;
                           break;
                         default:
-                          priorityColor = const Color(0xFFFFC107);
+                          priorityColor = AppColors.accent;
                       }
 
                       return DropdownMenuItem<String>(
@@ -385,7 +386,7 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                   ),
                   Switch(
                     value: _reminderEnabled,
-                    activeThumbColor: const Color(0xFFFFC107),
+                    activeThumbColor: AppColors.accent,
                     onChanged: (v) async {
                       setState(() => _reminderEnabled = v);
                       if (v && _reminderTime == null) {
@@ -396,8 +397,8 @@ class _AddEditAssignmentScreenState extends State<AddEditAssignmentScreen> {
                             return Theme(
                               data: Theme.of(context).copyWith(
                                 colorScheme: const ColorScheme.dark(
-                                  primary: Color(0xFFFFC107),
-                                  onPrimary: Color(0xFF071A3A),
+                                  primary: AppColors.accent,
+                                  onPrimary: Colors.white,
                                   surface: Color(0xFF1A2F4F),
                                   onSurface: Colors.white,
                                 ),

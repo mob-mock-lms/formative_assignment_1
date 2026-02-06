@@ -1,4 +1,5 @@
 import 'package:assignments/screens/root_screen.dart';
+import 'package:assignments/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,8 +19,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Formative Assessment 1',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF071A3A))),
-      home: MainScreen(),
+      theme: AppTheme.light,
+      home: const MainScreen(),
     );
   }
 }

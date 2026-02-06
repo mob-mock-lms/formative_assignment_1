@@ -1,4 +1,5 @@
 import 'package:assignments/models/assignment_session.dart';
+import 'package:assignments/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SessionsList<T extends List> extends StatelessWidget {
@@ -31,14 +32,12 @@ class SessionsList<T extends List> extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: const Color(
-                  0xFF64B5F6,
-                ).withValues(alpha: 0.2),
+                color: AppColors.infoLight(0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(
                 Icons.school,
-                color: Color(0xFF64B5F6),
+                color: AppColors.info,
               ),
             ),
             title: Text(
@@ -62,8 +61,8 @@ class SessionsList<T extends List> extends StatelessWidget {
                   ? Icons.check_circle
                   : Icons.cancel,
               color: session.attended!
-                  ? const Color(0xFF66BB6A)
-                  : const Color(0xFFE57373),
+                  ? AppColors.success
+                  : AppColors.error,
             )
                 : null,
           );

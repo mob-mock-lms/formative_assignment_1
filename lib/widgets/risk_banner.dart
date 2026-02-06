@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:assignments/theme/app_colors.dart';
 
 class RiskBanner extends StatelessWidget {
   const RiskBanner({super.key});
@@ -9,7 +10,7 @@ class RiskBanner extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFE57373),
+        color: AppColors.error,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(

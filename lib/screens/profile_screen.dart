@@ -1,5 +1,6 @@
 import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:assignments/widgets/help_card.dart';
+import 'package:assignments/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/models/user_profile.dart';
 
@@ -30,10 +31,10 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.surface(0.05),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.1),
+                    color: AppColors.border(0.1),
                     width: 1,
                   ),
                 ),
@@ -42,12 +43,12 @@ class ProfileScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFC107).withValues(alpha: 0.2),
+                        color: AppColors.accentLight(0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
                         Icons.email_rounded,
-                        color: Color(0xFFFFC107),
+                        color: AppColors.accent,
                         size: 24,
                       ),
                     ),
@@ -85,10 +86,10 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.surface(0.05),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.1),
+                    color: AppColors.border(0.1),
                     width: 1,
                   ),
                 ),
@@ -100,14 +101,12 @@ class ProfileScreen extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(
-                              0xFFFFC107,
-                            ).withValues(alpha: 0.2),
+                            color: AppColors.accentLight(0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Icon(
                             Icons.school_rounded,
-                            color: Color(0xFFFFC107),
+                            color: AppColors.accent,
                             size: 24,
                           ),
                         ),
@@ -133,14 +132,10 @@ class ProfileScreen extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: const Color(
-                              0xFFFFC107,
-                            ).withValues(alpha: 0.1),
+                            color: AppColors.accentLight(0.1),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: const Color(
-                                0xFFFFC107,
-                              ).withValues(alpha: 0.2),
+                              color: AppColors.accentLight(0.2),
                               width: 1,
                             ),
                           ),
@@ -148,13 +143,15 @@ class ProfileScreen extends StatelessWidget {
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFFC107),
-                                  borderRadius: BorderRadius.circular(8),
+                                decoration: const BoxDecoration(
+                                  color: AppColors.accent,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
                                 ),
                                 child: const Icon(
                                   Icons.check_circle_rounded,
-                                  color: Color(0xFF071A3A),
+                                  color: AppColors.primary,
                                   size: 20,
                                 ),
                               ),
@@ -189,7 +186,7 @@ class ProfileScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: onSignOut,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red.shade900,
+                    backgroundColor: AppColors.accent,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

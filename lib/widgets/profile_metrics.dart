@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:assignments/utils/constants.dart';
+import 'package:assignments/theme/app_colors.dart';
+import 'package:assignments/theme/app_providers.dart';
 import 'package:assignments/widgets/attendance_card.dart';
 
-class ProfileMetrics extends StatelessWidget {
+class ProfileMetrics extends StatefulWidget {
   const ProfileMetrics({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Compute attendance and exits from sessions
+  State<ProfileMetrics> createState() => _ProfileMetricsState();
+}
+
+class _ProfileMetricsState extends State<ProfileMetrics> {
+  final _assignmentRepo = AppProviders.assignmentRepository;
+  final _sessionRepo = AppProviders.sessionRepository;
+
+  double _attendancePercent = 100.0;
+  double _assignmentSubmission = 100.0;
+  double _exitsPercent = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMetrics();
+  }
+
+  Future<void> _loadMetrics() async {
+    final assignments = await _assignmentRepo.getAll();
+    final sessions = await _sessionRepo.getAll();
+
+    // Compute attendance from sessions
     final withAttendance = sessions.where((s) => s.attended != null).toList();
     double attendancePercent = 100.0;
-    double exitsPercent = 0.0; // Proxy: percentage of absences
+    double exitsPercent = 0.0;
     if (withAttendance.isNotEmpty) {
       final present = withAttendance.where((s) => s.attended == true).length;
       final absent = withAttendance.where((s) => s.attended == false).length;
@@ -25,12 +46,21 @@ class ProfileMetrics extends StatelessWidget {
         ? 100.0
         : (completed / total) * 100.0;
 
-    Color colorFor(double v) {
-      if (v >= 75) return Colors.green;
-      if (v >= 50) return Colors.orange;
-      return Colors.red;
-    }
+    setState(() {
+      _attendancePercent = attendancePercent;
+      _assignmentSubmission = assignmentSubmission;
+      _exitsPercent = exitsPercent;
+    });
+  }
 
+  Color colorFor(double v) {
+    if (v >= 75) return AppColors.success;
+    if (v >= 50) return AppColors.warning;
+    return AppColors.error;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,21 +68,21 @@ class ProfileMetrics extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AttendanceCard(
-              percent: '${attendancePercent.toStringAsFixed(0)}%',
+              percent: '${_attendancePercent.toStringAsFixed(0)}%',
               label: 'Attendance',
-              color: colorFor(attendancePercent),
+              color: colorFor(_attendancePercent),
             ),
             const SizedBox(width: 10),
             AttendanceCard(
-              percent: '${assignmentSubmission.toStringAsFixed(0)}%',
+              percent: '${_assignmentSubmission.toStringAsFixed(0)}%',
               label: 'Assignment Submission',
-              color: colorFor(assignmentSubmission),
+              color: colorFor(_assignmentSubmission),
             ),
             const SizedBox(width: 10),
             AttendanceCard(
-              percent: '${exitsPercent.toStringAsFixed(0)}%',
+              percent: '${_exitsPercent.toStringAsFixed(0)}%',
               label: 'Average Exits',
-              color: colorFor(100 - exitsPercent).withValues(alpha: 0.9),
+              color: colorFor(100 - _exitsPercent).withValues(alpha: 0.9),
             ),
           ],
         ),

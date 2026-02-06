@@ -1,4 +1,5 @@
 import 'package:assignments/widgets/app_app_bar.dart';
+import 'package:assignments/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/models/user_profile.dart';
 
@@ -40,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Please select at least one course'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
           ),
         );
         return;
@@ -59,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF071A3A),
+      backgroundColor: AppColors.primary,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: AppAppBar(title: "Student Sign-Up"),
@@ -89,29 +90,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(color: Color(0xFF071A3A)),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'University Email',
-                    labelStyle: const TextStyle(color: Color(0xFF071A3A)),
+                    labelStyle: const TextStyle(color: Colors.white70),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: AppColors.primary.withValues(alpha: 0.5),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white30),
+                      borderSide: BorderSide(color: AppColors.border(0.2)),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
-                        color: Color(0xFFFFC107),
+                        color: AppColors.accent,
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.red),
+                      borderSide: const BorderSide(color: AppColors.error),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.red, width: 2),
+                      borderSide: const BorderSide(color: AppColors.error, width: 2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -129,29 +130,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  style: const TextStyle(color: Color(0xFF071A3A)),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    labelStyle: const TextStyle(color: Color(0xFF071A3A)),
+                    labelStyle: const TextStyle(color: Colors.white70),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: AppColors.primary.withValues(alpha: 0.5),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white30),
+                      borderSide: BorderSide(color: AppColors.border(0.2)),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
-                        color: Color(0xFFFFC107),
+                        color: AppColors.accent,
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.red),
+                      borderSide: const BorderSide(color: AppColors.error),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.red, width: 2),
+                      borderSide: const BorderSide(color: AppColors.error, width: 2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -182,9 +183,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: const TextStyle(color: Colors.white),
                     ),
                     value: _courses[course],
-                    activeColor: const Color(0xFFFFC107),
-                    checkColor: const Color(0xFF071A3A),
-                    side: const BorderSide(color: Colors.white30),
+                    activeColor: AppColors.accent,
+                    checkColor: Colors.white,
+                    side: BorderSide(color: AppColors.border(0.3)),
                     onChanged: (v) {
                       setState(() => _courses[course] = v ?? false);
                     },
@@ -196,8 +197,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: ElevatedButton(
                     onPressed: _submit,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFC107),
-                      foregroundColor: const Color(0xFF071A3A),
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
