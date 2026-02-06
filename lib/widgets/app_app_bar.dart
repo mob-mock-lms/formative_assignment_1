@@ -8,7 +8,7 @@ class AppAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color(0xFF071A3A),
+      backgroundColor: Colors.transparent,
       title: Text(
         title,
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),

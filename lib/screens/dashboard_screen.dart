@@ -1,6 +1,7 @@
 import 'package:assignments/models/assignment.dart';
 import 'package:assignments/models/assignment_session.dart';
 import 'package:assignments/utils/constants.dart';
+import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:assignments/widgets/assignments_list.dart';
 import 'package:assignments/widgets/dashboard_empty_list.dart';
 import 'package:assignments/widgets/dashboard_section_header.dart';
@@ -77,28 +78,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final bool isAtRisk = attendancePercent < 75;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF071A3A),
-      appBar: AppBar(
-        title: const Text(
-          'Dashboard',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color(0xFF071A3A),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.person_outline, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
+      backgroundColor: Colors.transparent,
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(55),
+        child: AppAppBar(title: "Dashboard"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -108,7 +91,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               // greeting and date section
               Text(
-                'Hello Alex 👋',
+                'Hello Alex,',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.9),
                   fontSize: 28,
@@ -134,7 +117,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               if (isAtRisk) RiskBanner(),
 
               if (isAtRisk) const SizedBox(height: 20),
-
 
               // today's schedule section
               DashboardSectionHeader(

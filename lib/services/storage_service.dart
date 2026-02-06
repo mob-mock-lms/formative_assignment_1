@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-// StorageService is a thin wrapper around SharedPreferences to keep
-// all read/write logic in one place and provide typed helpers.
+// StorageService keeps all read/write logic in one place and provide helpers.
 class StorageService {
   StorageService._();
 

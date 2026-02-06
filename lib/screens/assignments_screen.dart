@@ -1,4 +1,5 @@
 import 'package:assignments/utils/constants.dart';
+import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import '../models/assignment.dart';
 import 'add_edit_assignment_screen.dart';
@@ -84,19 +85,10 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF071A3A),
-      appBar: AppBar(
-        title: const Text(
-          'Assignments',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color(0xFF071A3A),
-        elevation: 0,
-        centerTitle: false,
+      backgroundColor: Colors.transparent,
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(55),
+        child: AppAppBar(title: "Assignments"),
       ),
       body: _assignments.isEmpty
           ? Center(
