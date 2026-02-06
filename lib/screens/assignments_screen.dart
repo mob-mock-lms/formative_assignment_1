@@ -1,3 +1,4 @@
+import 'package:assignments/utils/constants.dart';
 import 'package:flutter/material.dart';
 import '../models/assignment.dart';
 import 'add_edit_assignment_screen.dart';
@@ -13,28 +14,13 @@ class AssignmentsScreen extends StatefulWidget {
 class _AssignmentsScreenState extends State<AssignmentsScreen> {
   // this a sample assignments list - this will store all assignments
 
-  List<Assignment> assignments = [
-    Assignment(
-      id: '1',
-      title: 'Remedial Project',
-      dueDate: DateTime.now().add(const Duration(days: 3)),
-      course: 'Software Engineering',
-      priority: 'High',
-    ),
-    Assignment(
-      id: '2',
-      title: 'Assignment 2',
-      dueDate: DateTime.now().add(const Duration(days: 5)),
-      course: 'Data Structures',
-      priority: 'Medium',
-    ),
-  ];
+  final List<Assignment> _assignments = assignments;
 
   // to Add new assignment to the list
 
   void _addAssignment(Assignment assignment) {
     setState(() {
-      assignments.add(assignment);
+      _assignments.add(assignment);
       _sortAssignments();
     });
   }
@@ -43,9 +29,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
 
   void _updateAssignment(Assignment updatedAssignment) {
     setState(() {
-      int index = assignments.indexWhere((a) => a.id == updatedAssignment.id);
+      int index = _assignments.indexWhere((a) => a.id == updatedAssignment.id);
       if (index != -1) {
-        assignments[index] = updatedAssignment;
+        _assignments[index] = updatedAssignment;
         _sortAssignments();
       }
     });
@@ -55,7 +41,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
 
   void _deleteAssignment(String id) {
     setState(() {
-      assignments.removeWhere((a) => a.id == id);
+      _assignments.removeWhere((a) => a.id == id);
     });
   }
 
@@ -63,9 +49,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
 
   void _toggleComplete(String id) {
     setState(() {
-      int index = assignments.indexWhere((a) => a.id == id);
+      int index = _assignments.indexWhere((a) => a.id == id);
       if (index != -1) {
-        assignments[index].isCompleted = !assignments[index].isCompleted;
+        _assignments[index].isCompleted = !_assignments[index].isCompleted;
       }
     });
   }
@@ -73,7 +59,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   // Sort assignments by due date
 
   void _sortAssignments() {
-    assignments.sort((a, b) => a.dueDate.compareTo(b.dueDate));
+    _assignments.sort((a, b) => a.dueDate.compareTo(b.dueDate));
   }
 
   // Navigate to add/edit screen
@@ -112,7 +98,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
         elevation: 0,
         centerTitle: false,
       ),
-      body: assignments.isEmpty
+      body: _assignments.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -137,9 +123,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: assignments.length,
+              itemCount: _assignments.length,
               itemBuilder: (context, index) {
-                final assignment = assignments[index];
+                final assignment = _assignments[index];
                 return _buildAssignmentCard(assignment);
               },
             ),

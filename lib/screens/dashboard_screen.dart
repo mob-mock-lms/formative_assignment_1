@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../utils/date_time_extension.dart';
-import '../widgets/dashboard_quick_stat_card.dart';
 import '../widgets/sessions_list.dart';
 import '../widgets/risk_banner.dart';
 
@@ -130,43 +129,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               // Attendance metrics + Get Help
               ProfileMetrics(),
               const SizedBox(height: 32),
-
-              // quick stats section (moved to top)
-              /*Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.1),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    DashboardQuickStatCard(
-                      label: 'Pending',
-                      value: pendingAssignmentsCount.toString(),
-                      icon: Icons.pending_actions,
-                    ),
-                    DashboardQuickStatCard(
-                      label: 'Completed',
-                      value: _assignments
-                          .where((a) => a.isCompleted)
-                          .length
-                          .toString(),
-                      icon: Icons.check_circle,
-                    ),
-                    DashboardQuickStatCard(
-                      label: 'Sessions',
-                      value: _sessions.length.toString(),
-                      icon: Icons.event,
-                    ),
-                  ],
-                ),
-              ),*/
-
-              const SizedBox(height: 24),
 
               // risk warning banner
               if (isAtRisk) RiskBanner(),
