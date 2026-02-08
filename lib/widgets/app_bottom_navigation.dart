@@ -29,8 +29,8 @@ class AppBottomNavigation extends StatelessWidget {
           label: "Quizzes",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.menu_book_outlined),
-          label: "E-learning",
+          icon: Icon(Icons.calendar_month_sharp),
+          label: "Schedule",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.checklist),
