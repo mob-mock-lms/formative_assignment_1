@@ -6,6 +6,7 @@ import 'package:assignments/screens/attendance.dart';
 import 'package:assignments/screens/elearning.dart';
 import 'package:assignments/screens/quizzes.dart';
 import 'package:assignments/widgets/app_bottom_navigation.dart';
+import 'package:assignments/screens/schedule_screen.dart';
 
 import '../models/user_profile.dart';
 
@@ -36,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   late final List<Widget> _screens = [
     DashboardScreen(),
     QuizzesScreen(),
-    ElearningScreen(),
+    ScheduleScreen(),
     AttendanceScreen(),
     ProfileScreen(profile: _userProfile!, onSignOut: _handleSignOut),
   ];
