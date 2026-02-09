@@ -1,4 +1,4 @@
-# ALU Academic Assistant - Student Management System
+# ALU Student Academic Platform
 
 ## Project Overview
 
@@ -6,7 +6,7 @@ The ALU Academic Assistant is a comprehensive Flutter-based mobile application d
 
 ## Project Purpose
 
-The primary objective of this application is to provide ALU students with a centralized digital solution that enables efficient academic planning and tracking. The system addresses key pain points including:
+The primary objective of this application is to provide ALU students with a centralized digital solution that enables efficient academic planning and tracking. The system addresses key pain points, including:
 
 - Assignment deadline management and prioritization
 - Real-time attendance monitoring and risk assessment
@@ -21,14 +21,14 @@ The dashboard serves as the central hub, providing students with a comprehensive
 
 - **Performance Metrics**: Real-time display of attendance percentage, assignment completion rate, and average grade
 - **Risk Assessment**: Automated identification of at-risk status based on attendance and assignment metrics
-- **Today's Schedule**: Dynamic display of current day's academic sessions with timing and location details
+- **Today's Schedule**: Dynamic display of the current day's academic sessions with timing and location details
 - **Upcoming Assignments**: Filtered view of assignments due within the next seven days
 - **Quick Statistics**: Aggregate counts of pending assignments, completed tasks, and total sessions
 
 ### 2. Assignment Management
 A comprehensive assignment tracking system that enables students to:
 
-- Create new assignments with detailed attributes including title, course, due date, and priority level
+- Create new assignments with detailed attributes, including title, course, due date, and priority level
 - View all assignments organized by due date in ascending order
 - Edit existing assignment details through an intuitive form interface
 - Delete assignments with confirmation prompts to prevent accidental removal
@@ -46,7 +46,7 @@ The schedule module provides comprehensive session tracking capabilities:
 
 - Create and edit academic sessions with title, date, time range, location, and session type
 - View all scheduled sessions in a chronological list format
-- Differentiate between session types including classes, study groups, and other academic activities
+- Differentiate between session types, including classes, study groups, and other academic activities
 - Delete obsolete sessions from the schedule
 - Filter today's sessions for quick reference on the dashboard
 
@@ -61,7 +61,7 @@ An attendance monitoring system designed to identify students at risk:
 - Display attendance metrics alongside assignment submission rates and average grades
 
 ### 5. User Profile Management
-User profile functionality including:
+User profile functionality, including:
 
 - User registration and authentication flow
 - Profile information display
@@ -200,7 +200,7 @@ We implemented ALU's institutional color scheme to maintain brand consistency:
 
 - **Card-Based Layout**: Content organization using elevated cards with consistent border radius (16px) and subtle borders
 - **Bottom Navigation**: Five-tab navigation pattern for primary feature access
-- **Floating Action Buttons**: Yellow circular buttons positioned at bottom-right for primary actions
+- **Floating Action Buttons**: Yellow circular buttons positioned at the bottom-right for primary actions
 - **List Items**: Interactive list tiles with trailing action menus
 - **Empty States**: Centered icon and message combinations for null data scenarios
 
@@ -208,7 +208,7 @@ We implemented ALU's institutional color scheme to maintain brand consistency:
 
 #### Current Implementation
 
-The application currently utilizes in-memory data storage with sample data defined in `utils/constants.dart`. This approach is suitable for demonstration and development purposes but results in data loss upon application termination.
+The application currently utilizes in-memory data storage with sample data defined in `utils/constants.dart`. This approach is suitable for demonstration and development purposes, but results in data loss upon application termination.
 
 Sample data includes:
 - Four predefined assignments with varying due dates and priorities
@@ -245,12 +245,12 @@ Sample data includes:
 
 4. **Run the Application**
    
-   For development on connected device or emulator:
+   For development on a connected device or emulator:
    ```bash
    flutter run
    ```
    
-   For specific platform:
+   For a specific platform:
    ```bash
    flutter run -d <device-id>
    ```
@@ -274,7 +274,7 @@ Sample data includes:
 
 ### Configuration
 
-The application uses default Flutter configuration. No additional environment variables or API keys are required for the current implementation.
+The application uses the default Flutter configuration. No additional environment variables or API keys are required for the current implementation.
 
 ## Development Guidelines
 
@@ -304,9 +304,9 @@ For consistency across the codebase:
 
 1. Manage state at the appropriate level in the widget tree
 2. Use setState() for local component state
-3. Pass data down through constructor parameters
+3. Pass data down through the constructor parameters
 4. Implement callback functions for child-to-parent communication
-5. Consider lifting state up when multiple widgets need access to the same data
+5. Consider lifting the state when multiple widgets need access to the same data
 
 ### Testing Guidelines
 
@@ -334,7 +334,7 @@ We welcome contributions from team members and the broader developer community. 
 2. **Commit Messages**: Write clear, concise commit messages describing the change and its purpose
 3. **Code Quality**: Ensure code follows the established style guidelines and passes linting
 4. **Testing**: Add appropriate tests for new functionality
-5. **Documentation**: Update relevant documentation including code comments and README sections
+5. **Documentation**: Update relevant documentation, including code comments and README sections
 
 ### Pull Request Process
 
