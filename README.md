@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The ALU Academic Assistant is a comprehensive Flutter-based mobile application designed to streamline academic management for African Leadership University students. The application provides an integrated platform for managing assignments, tracking attendance, monitoring academic schedules, and assessing student performance metrics. This project was developed as a collaborative effort to address the multifaceted challenges students face in organizing their academic responsibilities.
+The ALU Student Academic Platform is a Flutter-based mobile application designed to serve as a personal academic assistant for ALU students. The application provides an integrated platform for managing assignments, tracking attendance, monitoring academic schedules, and assessing student performance metrics.
 
 ## Project Purpose
 
