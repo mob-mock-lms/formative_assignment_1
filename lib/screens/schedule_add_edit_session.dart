@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/schedule_data.dart';
+import '../models/assignment_session.dart';
 
 // this screen is used to add or edit a session
 class AddEditSessionScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
-  String sessionType = 'class';
+  String sessionType = 'Class';
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
       selectedDate = widget.session!.date;
       startTime = widget.session!.startTime;
       endTime = widget.session!.endTime;
-      sessionType = widget.session!.type;
+      sessionType = widget.session!.sessionType;
     }
   }
 
@@ -195,12 +195,14 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
                   Navigator.pop(
                     context,
                     AcademicSession(
+                      id: widget.session?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
                       title: titleController.text,
                       date: selectedDate,
                       startTime: startTime,
                       endTime: endTime,
-                      type: sessionType,
+                      sessionType: sessionType,
                       location: locationController.text,
+                      attended: widget.session?.attended,
                     ),
                   );
                 },

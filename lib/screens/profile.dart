@@ -1,6 +1,7 @@
 import 'package:assignments/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/models/user_profile.dart';
+import '../utils/storage_service.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserProfile profile;
@@ -11,6 +12,44 @@ class ProfileScreen extends StatelessWidget {
     required this.profile,
     required this.onSignOut,
   });
+
+  void _showResetConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Reset to Default Data'),
+        content: const Text(
+          'This will reset all assignments, sessions, and attendance data to the original mock data. Your profile will remain intact.\n\nAre you sure you want to continue?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await StorageService.resetToDefaults();
+              
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Data has been reset to defaults'),
+                    backgroundColor: Colors.green,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            child: const Text('Reset'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +279,40 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
+
+              // Reset to Default Data Button
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: OutlinedButton(
+                  onPressed: () => _showResetConfirmation(context),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: const Color(0xFFFFC107),
+                    side: const BorderSide(
+                      color: Color(0xFFFFC107),
+                      width: 2,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.refresh_rounded, size: 20),
+                      SizedBox(width: 8),
+                      Text(
+                        'Reset to Default Data',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
 
               // Sign Out Button
               SizedBox(

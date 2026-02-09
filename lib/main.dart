@@ -1,7 +1,10 @@
 import 'package:assignments/screens/main-screen.dart';
+import 'package:assignments/utils/storage_service.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await StorageService.init();
   runApp(const MyApp());
 }
 

@@ -1,6 +1,6 @@
 import 'package:assignments/models/assignment.dart';
 import 'package:assignments/models/assignment_session.dart';
-import 'package:assignments/utils/constants.dart';
+import 'package:assignments/utils/storage_service.dart';
 import 'package:assignments/widgets/assignments_list.dart';
 import 'package:assignments/widgets/dashboard_empty_list.dart';
 import 'package:assignments/widgets/dashboard_section_header.dart';
@@ -22,10 +22,27 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // Sample data
-  final List<Assignment> _assignments = assignments;
+  // Data loaded from storage
+  List<Assignment> _assignments = [];
+  List<AcademicSession> _sessions = [];
+  bool _isLoading = true;
 
-  final List<AcademicSession> _sessions = sessions;
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final loadedAssignments = await StorageService.getAssignments();
+    final loadedSessions = await StorageService.getSessions();
+    
+    setState(() {
+      _assignments = loadedAssignments;
+      _sessions = loadedSessions;
+      _isLoading = false;
+    });
+  }
 
   // Getters for computed values
   List<AcademicSession> get todaysSessions {
@@ -70,6 +87,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
+      );
+    }
+
     final String today = DateFormat('EEEE, MMM d, y').format(DateTime.now());
     final int weekOfYear = ((DateTime.now().dayOfYear + 6) ~/ 7);
 

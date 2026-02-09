@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/assignment.dart';
+import '../utils/storage_service.dart';
 import 'add_edit_assignment_screen.dart';
 import 'package:intl/intl.dart';
 
@@ -11,36 +12,40 @@ class AssignmentsScreen extends StatefulWidget {
 }
 
 class _AssignmentsScreenState extends State<AssignmentsScreen> {
-  // this a sample assignments list - this will store all assignments
+  // Assignments list loaded from storage
+  List<Assignment> assignments = [];
+  bool _isLoading = true;
 
-  List<Assignment> assignments = [
-    Assignment(
-      id: '1',
-      title: 'User Research and Design',
-      dueDate: DateTime.now().add(const Duration(days: 1)),
-      course: 'Mobile App Development',
-      priority: 'High',
-    ),
-    Assignment(
-      id: '2',
-      title: 'Formative 2: Quiz',
-      dueDate: DateTime.now().add(const Duration(days: 2)),
-      course: 'Web Development',
-      priority: 'Medium',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadAssignments();
+  }
+
+  // Load assignments from storage
+  Future<void> _loadAssignments() async {
+    final loadedAssignments = await StorageService.getAssignments();
+    setState(() {
+      assignments = loadedAssignments;
+      _isLoading = false;
+    });
+  }
+
+  // Save assignments to storage
+  Future<void> _saveAssignments() async {
+    await StorageService.saveAssignments(assignments);
+  }
 
   // to Add new assignment to the list
-
   void _addAssignment(Assignment assignment) {
     setState(() {
       assignments.add(assignment);
       _sortAssignments();
     });
+    _saveAssignments();
   }
 
   // to Update existing assignment
-
   void _updateAssignment(Assignment updatedAssignment) {
     setState(() {
       int index = assignments.indexWhere((a) => a.id == updatedAssignment.id);
@@ -49,18 +54,18 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
         _sortAssignments();
       }
     });
+    _saveAssignments();
   }
 
   // Delete assignment
-
   void _deleteAssignment(String id) {
     setState(() {
       assignments.removeWhere((a) => a.id == id);
     });
+    _saveAssignments();
   }
 
   // Toggle assignment completion status
-
   void _toggleComplete(String id) {
     setState(() {
       int index = assignments.indexWhere((a) => a.id == id);
@@ -68,6 +73,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
         assignments[index].isCompleted = !assignments[index].isCompleted;
       }
     });
+    _saveAssignments();
   }
 
   // Sort assignments by due date
@@ -112,7 +118,11 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
         elevation: 0,
         centerTitle: false,
       ),
-      body: assignments.isEmpty
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            )
+          : assignments.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

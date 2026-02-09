@@ -64,7 +64,8 @@ An attendance monitoring system designed to identify students at risk:
 User profile functionality, including:
 
 - User registration and authentication flow
-- Profile information display
+- Profile information display with enrolled courses
+- Data reset to default mock data functionality
 - Sign-out capability with state reset
 
 ## System Architecture
@@ -74,6 +75,7 @@ User profile functionality, including:
 - **Framework**: Flutter 3.x
 - **Language**: Dart
 - **State Management**: StatefulWidget with setState()
+- **Data Management & Persistence**: SharedPreferences for local storage
 - **Date Handling**: intl package for internationalization and date formatting
 - **Platform Support**: iOS and Android (with web, Windows, macOS, and Linux configuration files present)
 
@@ -99,7 +101,8 @@ lib/
 │   └── signup.dart                        # Registration interface
 ├── utils/                                 # Utility functions and constants
 │   ├── constants.dart                     # Sample data and configuration
-│   └── date_time_extension.dart           # DateTime helper methods
+│   ├── date_time_extension.dart           # DateTime helper methods
+│   └── storage_service.dart               # SharedPreferences data persistence service
 └── widgets/                               # Reusable UI components
     ├── app_app_bar.dart                   # Custom application bar
     ├── app_bottom_navigation.dart         # Bottom navigation bar
@@ -123,44 +126,67 @@ lib/
 - Encapsulates assignment data including unique identifier, title, course, due date, priority, and completion status
 - Provides computed properties for overdue detection and days remaining calculation
 - Implements business logic for assignment state management
+- Includes JSON serialization methods (toJson/fromJson) for persistent storage
 
 **AcademicSession Model** (`models/assignment_session.dart`)
 - Represents scheduled academic activities with temporal and spatial attributes
 - Includes optional attendance tracking field
 - Provides helper method for identifying current day's sessions
+- Implements JSON serialization for data persistence
 
 **UserProfile Model** (`models/user_profile.dart`)
 - Manages user authentication state and profile information
+- Includes JSON serialization for profile data persistence
+
+#### Utilities Layer
+
+**StorageService** (`utils/storage_service.dart`)
+- Centralized data persistence layer using SharedPreferences
+- Manages initialization and first-run detection
+- Provides methods for loading and saving assignments, sessions, and user profiles
+- Implements hybrid storage approach with mock data fallback
+- Includes utility methods for data reset and clearing operations
+- Ensures data consistency across application lifecycle
 
 #### Screens Layer
 
 **MainScreen** (`screens/main-screen.dart`)
 - Implements the primary navigation container using IndexedStack for state preservation
 - Manages bottom navigation interaction and screen switching
-- Handles user authentication flow and profile state management
+- Handles user authentication flow with persistent profile state management
+- Loads user profile from StorageService on initialization
 - Coordinates between five primary screens: Dashboard, Assignments, Schedule, Attendance, and Profile
 
 **DashboardScreen** (`screens/dashboard.dart`)
-- Aggregates data from multiple sources to provide comprehensive academic overview
+- Aggregates data from persistent storage to provide comprehensive academic overview
 - Implements computed properties for real-time metric calculation
 - Filters and sorts data based on relevance and temporal proximity
 - Provides risk assessment logic based on attendance thresholds
+- Loads data asynchronously from StorageService on initialization
 
 **AssignmentsScreen** (`screens/assignments_screen.dart`)
 - Displays comprehensive assignment list with sorting by due date
-- Implements CRUD operations for assignment management
+- Implements CRUD operations for assignment management with automatic persistence
 - Provides quick actions for completion toggling and item deletion
 - Handles empty state presentation
+- Automatically saves changes to SharedPreferences after each operation
 
 **ScheduleScreen** (`screens/schedule_screen.dart`)
-- Manages chronological display of academic sessions
-- Facilitates session creation, editing, and deletion
+- Manages chronological display of academic sessions from persistent storage
+- Facilitates session creation, editing, and deletion with data persistence
 - Supports multiple session types and time ranges
+- Automatically syncs changes to SharedPreferences
 
 **AttendanceScreen** (`screens/attendance.dart`)
 - Presents attendance history with visual status indicators
 - Calculates and displays key performance metrics
 - Implements risk identification and support resource access
+
+**ProfileScreen** (`screens/profile.dart`)
+- Displays user profile information and enrolled courses
+- Provides data reset functionality to restore default mock data
+- Implements sign-out with confirmation and state clearing
+- Manages user session persistence through StorageService
 
 #### Widgets Layer
 
@@ -173,14 +199,15 @@ The widgets layer consists of reusable, composable UI components that maintain v
 
 ### State Management Strategy
 
-We implemented a lightweight state management approach using Flutter's built-in StatefulWidget and setState() mechanism. This decision was based on several factors:
+We implemented a lightweight state management approach using Flutter's built-in StatefulWidget and setState() mechanism, integrated with SharedPreferences for data persistence. This decision was based on several factors:
 
 - **Application Scale**: The current feature set does not warrant the complexity of external state management solutions
-- **Performance**: Local state updates provide adequate performance for the current data volumes
-- **Maintainability**: Built-in state management reduces dependency overhead and simplifies codebase understanding
+- **Performance**: Local state updates with asynchronous persistence provide adequate performance for the current data volumes
+- **Maintainability**: Built-in state management combined with a centralized StorageService reduces dependency overhead and simplifies codebase understanding
 - **Development Velocity**: Rapid iteration and feature development without additional architectural overhead
+- **Data Persistence**: Seamless integration between UI state and persistent storage through StorageService
 
-Data flows unidirectionally from parent screens to child widgets through constructor parameters. State updates trigger UI rebuilds through setState() calls, ensuring UI consistency with underlying data.
+Data flows unidirectionally from parent screens to child widgets through constructor parameters. State updates trigger UI rebuilds through setState() calls, ensuring UI consistency with underlying data. All data modifications automatically persist to SharedPreferences through the StorageService layer, maintaining data integrity across application sessions.
 
 ### Design System
 
@@ -206,13 +233,79 @@ We implemented ALU's institutional color scheme to maintain brand consistency:
 
 ### Data Management
 
-#### Current Implementation
+#### Persistent Storage Implementation
 
-The application currently utilizes in-memory data storage with sample data defined in `utils/constants.dart`. This approach is suitable for demonstration and development purposes, but results in data loss upon application termination.
+The application implements a hybrid data persistence strategy using SharedPreferences, combining local storage with intelligent fallback to mock data. This approach ensures data persistence across application sessions while maintaining a reliable default dataset for new users and testing scenarios.
 
-Sample data includes:
+**Key Storage Features:**
+
+1. **Persistent Data Storage**
+   - All user data (assignments, sessions, user profiles) persists between app sessions
+   - Data is stored locally on the device using SharedPreferences
+   - JSON serialization enables complex object storage
+   - Automatic initialization on first app launch
+
+2. **Hybrid Storage Strategy**
+   - First-run detection automatically seeds storage with mock data from `constants.dart`
+   - Subsequent launches load persisted user data
+   - Graceful fallback to mock data if storage errors occur
+   - Mock data preserved in codebase as factory defaults
+
+3. **Data Reset Capability**
+   - Users can reset all data to defaults via Profile screen
+   - "Reset to Default Data" button restores original mock data
+   - Confirmation dialog prevents accidental data loss
+   - User profile remains intact during data reset
+
+**Storage Architecture:**
+
+The `StorageService` class (`utils/storage_service.dart`) provides a centralized interface for all persistence operations:
+
+- **Initialization**: `init()` method configures SharedPreferences and handles first-run setup
+- **Assignment Operations**: `getAssignments()` and `saveAssignments()` for assignment data
+- **Session Operations**: `getSessions()` and `saveSessions()` for schedule data
+- **Profile Operations**: `getUserProfile()`, `saveUserProfile()`, and `clearUserProfile()` for authentication
+- **Utility Operations**: `resetToDefaults()` and `clearAll()` for data management
+
+**Data Flow:**
+
+```
+Application Launch
+    ↓
+StorageService.init()
+    ↓
+Check first_run flag
+    ↓
+├─ First Run: Load mock data from constants.dart → Save to SharedPreferences
+└─ Returning User: Load existing data from SharedPreferences
+    ↓
+Screen Initialization
+    ↓
+Load data via StorageService methods
+    ↓
+User Interactions (Add/Edit/Delete)
+    ↓
+Update in-memory state + Save to SharedPreferences
+    ↓
+Data persists across app sessions
+```
+
+**Mock Data as Fallback:**
+
+The `constants.dart` file serves as the source of truth for default data:
 - Four predefined assignments with varying due dates and priorities
 - Five academic sessions spanning multiple days with attendance records
+- Automatically loaded on first run or manual reset
+- Preserved in codebase for testing and demo purposes
+
+**JSON Serialization:**
+
+All data models implement `toJson()` and `fromJson()` methods:
+- `Assignment` model: Serializes id, title, course, dueDate, priority, and completion status
+- `AcademicSession` model: Serializes session details including TimeOfDay objects
+- `UserProfile` model: Serializes user credentials and course enrollment
+
+This architecture ensures data reliability, user convenience, and developer flexibility while maintaining a clean separation between persistent storage and business logic.
 
 ## Setup and Installation
 

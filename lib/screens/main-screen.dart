@@ -6,8 +6,8 @@ import 'package:assignments/screens/attendance.dart';
 import 'package:assignments/screens/assignments_screen.dart';
 import 'package:assignments/widgets/app_bottom_navigation.dart';
 import 'package:assignments/screens/schedule_screen.dart';
-
 import '../models/user_profile.dart';
+import '../utils/storage_service.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,14 +19,31 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedTabIndex = 0;
   UserProfile? _userProfile;
+  bool _isLoading = true;
 
-  void _handleSignup(UserProfile profile) {
+  @override
+  void initState() {
+    super.initState();
+    _loadUserProfile();
+  }
+
+  Future<void> _loadUserProfile() async {
+    final profile = await StorageService.getUserProfile();
+    setState(() {
+      _userProfile = profile;
+      _isLoading = false;
+    });
+  }
+
+  void _handleSignup(UserProfile profile) async {
+    await StorageService.saveUserProfile(profile);
     setState(() {
       _userProfile = profile;
     });
   }
 
-  void _handleSignOut() {
+  void _handleSignOut() async {
+    await StorageService.clearUserProfile();
     setState(() {
       _userProfile = null;
       _selectedTabIndex = 0;
@@ -49,6 +66,15 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF071A3A),
+        body: Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
+      );
+    }
+
     if (_userProfile == null) {
       return SignUpScreen(onSubmit: _handleSignup);
     }

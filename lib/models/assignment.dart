@@ -15,6 +15,29 @@ class Assignment {
     this.isCompleted = false,
   });
 
+  // JSON serialization
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'course': course,
+      'dueDate': dueDate.toIso8601String(),
+      'priority': priority,
+      'isCompleted': isCompleted,
+    };
+  }
+
+  factory Assignment.fromJson(Map<String, dynamic> json) {
+    return Assignment(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      course: json['course'] as String,
+      dueDate: DateTime.parse(json['dueDate'] as String),
+      priority: json['priority'] as String? ?? 'Medium',
+      isCompleted: json['isCompleted'] as bool? ?? false,
+    );
+  }
+
   // this is a helper method to get priority color
   String getPriorityColor() {
     switch (priority) {

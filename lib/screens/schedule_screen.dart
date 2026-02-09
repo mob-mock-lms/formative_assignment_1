@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/schedule_data.dart';
+import '../models/assignment_session.dart';
+import '../utils/storage_service.dart';
 import 'schedule_add_edit_session.dart';
 
 // this screen shows schedule in list and calendar view
@@ -13,12 +14,28 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen>
     with SingleTickerProviderStateMixin {
   List<AcademicSession> sessions = [];
+  bool _isLoading = true;
   late TabController tabController;
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    _loadSessions();
+  }
+
+  // Load sessions from storage
+  Future<void> _loadSessions() async {
+    final loadedSessions = await StorageService.getSessions();
+    setState(() {
+      sessions = loadedSessions;
+      _isLoading = false;
+    });
+  }
+
+  // Save sessions to storage
+  Future<void> _saveSessions() async {
+    await StorageService.saveSessions(sessions);
   }
 
   // this finds the first day of the current week
@@ -107,12 +124,17 @@ class _ScheduleScreenState extends State<ScheduleScreen>
             setState(() {
               sessions.add(newSession);
             });
+            _saveSessions();
           }
         },
         child: const Icon(Icons.add, color: Colors.black),
       ),
 
-      body: TabBarView(
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            )
+          : TabBarView(
         controller: tabController,
         children: [
           // list tab shows only current week
@@ -133,7 +155,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                       child: ListTile(
                         title: Text(session.title),
                         subtitle: Text(
-                          '${session.type} | ${session.startTime.format(context)} - ${session.endTime.format(context)}',
+                          '${session.sessionType} | ${session.startTime.format(context)} - ${session.endTime.format(context)}',
                         ),
                         trailing: SizedBox(
                           width: 70,
@@ -141,19 +163,20 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                             child: Column(
                               children: [
                                 Text(
-                                  session.isPresent ? 'present' : 'absent',
+                                  (session.attended ?? true) ? 'present' : 'absent',
                                   style: TextStyle(
-                                    color: session.isPresent
+                                    color: (session.attended ?? true)
                                         ? Colors.green
                                         : Colors.red,
                                   ),
                                 ),
                                 Switch(
-                                  value: session.isPresent,
+                                  value: session.attended ?? true,
                                   onChanged: (value) {
                                     setState(() {
-                                      session.isPresent = value;
+                                      session.attended = value;
                                     });
+                                    _saveSessions();
                                   },
                                 ),
                               ],
@@ -161,7 +184,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                           ),
                         ),
                         onTap: () async {
-                          final edited = await Navigator.push(
+                          final AcademicSession? edited = await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
@@ -174,6 +197,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                               final i = sessions.indexOf(session);
                               sessions[i] = edited;
                             });
+                            _saveSessions();
                           }
                         },
                         onLongPress: () {
@@ -194,6 +218,7 @@ class _ScheduleScreenState extends State<ScheduleScreen>
                                     setState(() {
                                       sessions.remove(session);
                                     });
+                                    _saveSessions();
                                     Navigator.pop(context);
                                   },
                                   child: const Text('yes'),

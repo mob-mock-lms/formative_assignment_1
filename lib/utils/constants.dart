@@ -4,33 +4,32 @@ import 'package:flutter/material.dart';
 
 final List<Assignment> assignments = [
   Assignment(
-    id: '1',
-    title: 'Formative 2: Quiz',
-    course: 'Web Development',
-    dueDate: DateTime.now().add(const Duration(days: 2)),
-    priority: 'High',
-  ),
-  Assignment(
-    id: '2',
-    title: 'Proposal and SRS Document',
-    course: 'Introduction to Software Engineering',
-    dueDate: DateTime.now().add(const Duration(days: 5)),
-    priority: 'Medium',
-  ),
-  Assignment(
-    id: '3',
+     id: '1',
     title: 'User Research and Design',
     course: 'Mobile App Development',
     dueDate: DateTime.now().add(const Duration(days: 1)),
     priority: 'High',
   ),
   Assignment(
+    id: '2',
+    title: 'Formative 2: Quiz',
+    course: 'Web Development',
+    dueDate: DateTime.now().add(const Duration(days: 2)),
+    priority: 'Medium',
+  ),
+  Assignment(
+    id: '3',
+    title: 'Proposal and SRS Document',
+    course: 'Introduction to Software Engineering',
+    dueDate: DateTime.now().add(const Duration(days: 5)),
+    priority: 'Medium',
+  ),
+  Assignment(
     id: '4',
     title: 'Playing Around with APIs',
     course: 'Web Development',
-    dueDate: DateTime.now().add(const Duration(days: 10)),
+    dueDate: DateTime.now().add(const Duration(days: 7)),
     priority: 'Low',
-    isCompleted: true,
   ),
 ];
 
