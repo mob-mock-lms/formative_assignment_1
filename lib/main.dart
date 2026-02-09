@@ -1,4 +1,4 @@
-import 'package:assignments/screens/main.dart';
+import 'package:assignments/screens/main-screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Formative Assessment 1',
+      title: 'Student Academic Platform',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF071A3A))),
       home: MainScreen(),

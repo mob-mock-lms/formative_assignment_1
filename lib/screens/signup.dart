@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final Map<String, bool> _courses = {
     'Mobile Application Development': false,
-    'Front End Web Development': false,
+    'Web Development': false,
     'Introduction to Software Engineering': false,
   };
 

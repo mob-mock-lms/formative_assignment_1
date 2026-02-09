@@ -3,8 +3,7 @@ import 'package:assignments/screens/profile.dart';
 import 'package:assignments/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:assignments/screens/attendance.dart';
-import 'package:assignments/screens/elearning.dart';
-import 'package:assignments/screens/quizzes.dart';
+import 'package:assignments/screens/assignments_screen.dart';
 import 'package:assignments/widgets/app_bottom_navigation.dart';
 import 'package:assignments/screens/schedule_screen.dart';
 
@@ -36,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
 
   late final List<Widget> _screens = [
     DashboardScreen(),
-    QuizzesScreen(),
+    AssignmentsScreen(),
     ScheduleScreen(),
     AttendanceScreen(),
     ProfileScreen(profile: _userProfile!, onSignOut: _handleSignOut),
