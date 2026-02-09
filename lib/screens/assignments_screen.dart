@@ -16,16 +16,16 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   List<Assignment> assignments = [
     Assignment(
       id: '1',
-      title: 'Remedial Project',
-      dueDate: DateTime.now().add(const Duration(days: 3)),
-      course: 'Software Engineering',
+      title: 'User Research and Design',
+      dueDate: DateTime.now().add(const Duration(days: 1)),
+      course: 'Mobile App Development',
       priority: 'High',
     ),
     Assignment(
       id: '2',
-      title: 'Assignment 2',
-      dueDate: DateTime.now().add(const Duration(days: 5)),
-      course: 'Data Structures',
+      title: 'Formative 2: Quiz',
+      dueDate: DateTime.now().add(const Duration(days: 2)),
+      course: 'Web Development',
       priority: 'Medium',
     ),
   ];

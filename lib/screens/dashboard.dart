@@ -22,7 +22,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // Sample data - your teammates can add their real data here
+  // Sample data
   final List<Assignment> _assignments = assignments;
 
   final List<AcademicSession> _sessions = sessions;
@@ -75,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     final attendancePercent = attendancePercentage;
     final assignmentAttainmentPercent = assignmentAttainment;
-    final averageGrade = 63.0; // Placeholder - calculate from actual grades
+    final averageGrade = 82.0; // Placeholder
 
     final bool isAtRisk = attendancePercent < 75;
 
@@ -109,16 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // greeting and date section
-              Text(
-                'Hello Alex 👋',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.9),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 4),
+              // date section
               Text(
                 '$today - Week $weekOfYear',
                 style: TextStyle(

@@ -25,8 +25,8 @@ class AppBottomNavigation extends StatelessWidget {
           label: "Dashboard",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.bar_chart_outlined),
-          label: "Quizzes",
+          icon: Icon(Icons.assignment_outlined),
+          label: "Assignments",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_month_sharp),
