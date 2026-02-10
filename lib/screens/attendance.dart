@@ -8,6 +8,8 @@ import '../widgets/attendance_card.dart';
 import '../widgets/help_card.dart';
 
 class AttendanceScreen extends StatelessWidget {
+  final attendanceSize = 15;
+
   const AttendanceScreen({super.key});
 
   @override
@@ -80,8 +82,7 @@ class AttendanceScreen extends StatelessWidget {
                     spacing: 10,
                     children: [
                       // No attendance entries case
-                      // modify condition to test list of attendance length
-                      if (false)
+                      if (attendanceSize <= 0)
                         const Center(
                           child: Text(
                             "No attendance records found.",
@@ -93,9 +94,9 @@ class AttendanceScreen extends StatelessWidget {
                         )
                       else
                         // Display all attendance entries
-                        for (var i = 1; i <= 31; i++)
+                        for (var i = 1; i <= attendanceSize; i++)
                           AttendanceEntry(
-                            date: "2024-06-${i < 10 ? '0$i' : i}",
+                            date: "2026-01-${i < 10 ? '0$i' : i}",
                             attended: Random().nextBool(),
                           ),
                     ],
