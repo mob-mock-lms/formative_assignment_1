@@ -82,7 +82,6 @@ class AttendanceScreen extends StatelessWidget {
                     spacing: 10,
                     children: [
                       // No attendance entries case
-                      // modify condition to test list of attendance length
                       if (attendanceSize <= 0)
                         const Center(
                           child: Text(
