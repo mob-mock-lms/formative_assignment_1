@@ -113,16 +113,18 @@ class _ScheduleScreenState extends State<ScheduleScreen>
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xfff5c542),
         onPressed: () async {
-          final newSession = await Navigator.push(
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const AddEditSessionScreen(),
             ),
           );
 
-          if (newSession != null) {
+          if (result == null) return;
+
+          if (result['type'] == SessionResultType.save) {
             setState(() {
-              sessions.add(newSession);
+              sessions.add(result['session']);
             });
             _saveSessions();
           }
@@ -131,124 +133,134 @@ class _ScheduleScreenState extends State<ScheduleScreen>
       ),
 
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(color: Colors.white),
-            )
+          ? const Center(child: CircularProgressIndicator(color: Colors.white))
           : TabBarView(
-        controller: tabController,
-        children: [
-          // list tab shows only current week
-          weeklySessions.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No sessions this week',
-                    style: TextStyle(color: Colors.white70, fontSize: 16),
-                  ),
-                )
-              : ListView.builder(
-                  itemCount: weeklySessions.length,
-                  itemBuilder: (context, index) {
-                    final session = weeklySessions[index];
-
-                    return Card(
-                      margin: const EdgeInsets.all(10),
-                      child: ListTile(
-                        title: Text(session.title),
-                        subtitle: Text(
-                          '${session.sessionType} | ${session.startTime.format(context)} - ${session.endTime.format(context)}',
+              controller: tabController,
+              children: [
+                // list tab shows only current week
+                weeklySessions.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'No sessions this week',
+                          style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
-                        trailing: SizedBox(
-                          width: 70,
-                          child: FittedBox(
-                            child: Column(
-                              children: [
-                                Text(
-                                  (session.attended ?? true) ? 'present' : 'absent',
-                                  style: TextStyle(
-                                    color: (session.attended ?? true)
-                                        ? Colors.green
-                                        : Colors.red,
+                      )
+                    : ListView.builder(
+                        itemCount: weeklySessions.length,
+                        itemBuilder: (context, index) {
+                          final session = weeklySessions[index];
+
+                          return Card(
+                            margin: const EdgeInsets.all(10),
+                            child: ListTile(
+                              title: Text(session.title),
+                              subtitle: Text(
+                                '${session.sessionType} | ${session.startTime.format(context)} - ${session.endTime.format(context)}',
+                              ),
+                              trailing: SizedBox(
+                                width: 70,
+                                child: FittedBox(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        (session.attended ?? true)
+                                            ? 'present'
+                                            : 'absent',
+                                        style: TextStyle(
+                                          color: (session.attended ?? true)
+                                              ? Colors.green
+                                              : Colors.red,
+                                        ),
+                                      ),
+                                      Switch(
+                                        value: session.attended ?? true,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            session.attended = value;
+                                          });
+                                          _saveSessions();
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Switch(
-                                  value: session.attended ?? true,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      session.attended = value;
-                                    });
-                                    _saveSessions();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        onTap: () async {
-                          final AcademicSession? edited = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AddEditSessionScreen(session: session),
-                            ),
-                          );
-
-                          if (edited != null) {
-                            setState(() {
-                              final i = sessions.indexOf(session);
-                              sessions[i] = edited;
-                            });
-                            _saveSessions();
-                          }
-                        },
-                        onLongPress: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('cancel session'),
-                              content: const Text(
-                                'do you want to remove this session',
                               ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('no'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      sessions.remove(session);
-                                    });
-                                    _saveSessions();
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('yes'),
-                                ),
-                              ],
+                              onTap: () async {
+                                final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AddEditSessionScreen(session: session),
+                                  ),
+                                );
+
+                                if (result == null) return;
+
+                                if (result['type'] ==
+                                    SessionResultType.delete) {
+                                  setState(() {
+                                    sessions.remove(session);
+                                  });
+                                  _saveSessions();
+                                }
+
+                                if (result['type'] == SessionResultType.save) {
+                                  setState(() {
+                                    final i = sessions.indexOf(session);
+                                    sessions[i] = result['session'];
+                                  });
+                                  _saveSessions();
+                                }
+                              },
+                              onLongPress: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('cancel session'),
+                                    content: const Text(
+                                      'do you want to remove this session',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('no'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            sessions.remove(session);
+                                          });
+                                          _saveSessions();
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('yes'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           );
                         },
                       ),
-                    );
-                  },
-                ),
 
-          // calendar tab
-          sessions.isEmpty
-              ? const Center(
-                  child: Text(
-                    'You have no sessions',
-                    style: TextStyle(color: Colors.white70, fontSize: 16),
-                  ),
-                )
-              : ListView(
-                  children: [
-                    buildCalendarSection('this week', weeklySessions, 1),
-                    buildCalendarSection('upcoming', upcomingSessions, 1),
-                    buildCalendarSection('past', pastSessions, 0.4),
-                  ],
-                ),
-        ],
-      ),
+                // calendar tab
+                sessions.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'You have no sessions',
+                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                        ),
+                      )
+                    : ListView(
+                        children: [
+                          buildCalendarSection('this week', weeklySessions, 1),
+                          buildCalendarSection('upcoming', upcomingSessions, 1),
+                          buildCalendarSection('past', pastSessions, 0.4),
+                        ],
+                      ),
+              ],
+            ),
     );
   }
 

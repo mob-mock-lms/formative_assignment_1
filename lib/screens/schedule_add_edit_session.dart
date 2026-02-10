@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/assignment_session.dart';
 
+enum SessionResultType { save, delete }
+
 // this screen is used to add or edit a session
 class AddEditSessionScreen extends StatefulWidget {
   final AcademicSession? session;
@@ -48,7 +50,7 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context); // close dialog
-              Navigator.pop(context, 'delete'); // signal delete
+              Navigator.pop(context, {'type': SessionResultType.delete});
             },
             child: const Text('delete', style: TextStyle(color: Colors.red)),
           ),
@@ -56,7 +58,6 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
       ),
     );
   }
-
 
   String formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
@@ -216,9 +217,9 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
                 onPressed: () {
                   if (titleController.text.isEmpty) return;
 
-                  Navigator.pop(
-                    context,
-                    AcademicSession(
+                  Navigator.pop(context, {
+                    'type': SessionResultType.save,
+                    'session': AcademicSession(
                       id:
                           widget.session?.id ??
                           DateTime.now().millisecondsSinceEpoch.toString(),
@@ -230,8 +231,9 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
                       location: locationController.text,
                       attended: widget.session?.attended,
                     ),
-                  );
+                  });
                 },
+
                 child: const Text('Save'),
               ),
             ),
@@ -245,7 +247,10 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
                   onPressed: () {
                     _confirmDelete(context);
                   },
-                  child: const Text('Delete session', style: TextStyle(color: Colors.white)),
+                  child: const Text(
+                    'Delete session',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],
