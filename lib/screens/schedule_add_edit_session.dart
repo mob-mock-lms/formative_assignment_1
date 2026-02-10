@@ -18,7 +18,7 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
-  String sessionType = 'Class';
+  String sessionType = 'class';
 
   @override
   void initState() {
@@ -33,6 +33,30 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
       sessionType = widget.session!.sessionType;
     }
   }
+
+  void _confirmDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Session'),
+        content: const Text('Are you sure you want to delete this session?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // close dialog
+              Navigator.pop(context, 'delete'); // signal delete
+            },
+            child: const Text('delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   String formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
@@ -195,7 +219,9 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
                   Navigator.pop(
                     context,
                     AcademicSession(
-                      id: widget.session?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
+                      id:
+                          widget.session?.id ??
+                          DateTime.now().millisecondsSinceEpoch.toString(),
                       title: titleController.text,
                       date: selectedDate,
                       startTime: startTime,
@@ -206,9 +232,23 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
                     ),
                   );
                 },
-                child: const Text('save'),
+                child: const Text('Save'),
               ),
             ),
+
+            if (widget.session != null) ...[
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  onPressed: () {
+                    _confirmDelete(context);
+                  },
+                  child: const Text('Delete session', style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ],
         ),
       ),
