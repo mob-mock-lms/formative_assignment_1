@@ -20,7 +20,7 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
-  String sessionType = 'class';
+  String sessionType = 'Class';
 
   @override
   void initState() {
@@ -188,18 +188,18 @@ class _AddEditSessionScreenState extends State<AddEditSessionScreen> {
               dropdownColor: const Color(0xff0a1a33),
               style: const TextStyle(color: Colors.white),
               items: const [
-                DropdownMenuItem(value: 'class', child: Text('class')),
+                DropdownMenuItem(value: 'Class', child: Text('Class')),
                 DropdownMenuItem(
-                  value: 'study group',
-                  child: Text('study group'),
+                  value: 'Study Group',
+                  child: Text('Study Group'),
                 ),
                 DropdownMenuItem(
-                  value: 'mastery session',
-                  child: Text('mastery session'),
+                  value: 'Mastery Session',
+                  child: Text('Mastery Session'),
                 ),
                 DropdownMenuItem(
-                  value: 'psl meeting',
-                  child: Text('psl meeting'),
+                  value: 'PSL Meeting',
+                  child: Text('PSL Meeting'),
                 ),
               ],
               onChanged: (value) {
