@@ -96,7 +96,7 @@ class AttendanceScreen extends StatelessWidget {
                         // Display all attendance entries
                         for (var i = 1; i <= attendanceSize; i++)
                           AttendanceEntry(
-                            date: "2024-06-${i < 10 ? '0$i' : i}",
+                            date: "2026-01-${i < 10 ? '0$i' : i}",
                             attended: Random().nextBool(),
                           ),
                     ],
